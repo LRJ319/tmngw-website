@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merch – This Might Not Go Well</title>
+  <meta name="description" content="Official TMNGW merch. Tees, hoodies, hats, and more. Rep the show." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .merch-img { position: relative; }
+    .merch-img .label-text { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; text-align: center; line-height: 1.1; }
+    .merch-badge { position: absolute; top: 12px; right: 12px; background: var(--c-gold); color: #0a0800; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+  </style>
+</head>
+<body>
+
+<nav id="nav" class="scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">TMNG<span class="logo-accent">W</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="booking.html">Booking</a>
+      <a href="patreon.html">Patreon</a>
+      <a href="merch.html" class="active">Merch</a>
+      <a href="sponsors.html">Advertise</a>
+      <a href="sponsors.html" class="btn btn-primary btn-sm nav-cta">Sponsor Us</a>
+    </div>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="20" y2="6"/><line x1="2" y1="11" x2="20" y2="11"/><line x1="2" y1="16" x2="20" y2="16"/></svg>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container page-hero-content">
+    <div class="eyebrow" style="justify-content:center;">Official Store</div>
+    <h1 style="margin-bottom:16px;">Rep the<br><span style="color:var(--c-red);">Show</span></h1>
+    <p class="lead" style="max-width:480px;margin:0 auto;">Wear it. Use it. Start a conversation. Official TMNGW merch, built for the culture.</p>
+  </div>
+</section>
+
+<!-- FILTERS + GRID -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px;" class="fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="apparel">Apparel</button>
+      <button class="filter-btn" data-filter="headwear">Headwear</button>
+      <button class="filter-btn" data-filter="accessories">Accessories</button>
+    </div>
+
+    <div class="merch-grid fade-up" id="merchGrid" style="animation-delay:0.06s;">
+
+      <div class="merch-card" data-category="apparel">
+        <div class="merch-img" style="background:linear-gradient(135deg,#081018,#0a1a2e);">
+          <div class="label-text" style="font-size:3.2rem;color:var(--c-red);">TMNGW</div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Classic Tee</h4>
+          <div class="meta">Unisex · S – 3XL</div>
+          <div class="merch-price">$35</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="apparel">
+        <div class="merch-img" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2a);">
+          <div class="label-text" style="font-size:2.8rem;color:#9b6fd6;">TMNGW<br><span style="font-size:1.1rem;color:var(--c-red);">NYC</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>NYC Pullover Hoodie</h4>
+          <div class="meta">Unisex · S – 3XL</div>
+          <div class="merch-price">$65</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="headwear">
+        <div class="merch-img" style="background:linear-gradient(135deg,#0a0a00,#1a1500);">
+          <div class="label-text" style="font-size:2.6rem;color:var(--c-white);">TMNGW<br><span style="font-size:0.9rem;color:var(--c-gold);">Fitted Cap</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Fitted Cap</h4>
+          <div class="meta">One size fits most</div>
+          <div class="merch-price">$40</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="apparel">
+        <div class="merch-img" style="background:linear-gradient(135deg,#001020,#001428);">
+          <div class="label-text" style="font-size:1.8rem;color:var(--c-white);">TOXIC<br>SERVICE<br><span style="color:var(--c-red);">ANNOUNCEMENT</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TSA Tee</h4>
+          <div class="meta">Unisex · S – 3XL · Limited</div>
+          <div class="merch-price">$38</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="accessories">
+        <div class="merch-img" style="background:linear-gradient(135deg,#0a1000,#0f1a05);">
+          <div class="label-text" style="font-size:2.8rem;">☕<br><span style="font-size:1.4rem;color:var(--c-white);">TMNGW</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Coffee Mug</h4>
+          <div class="meta">15oz ceramic · Dishwasher safe</div>
+          <div class="merch-price">$22</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="headwear">
+        <div class="merch-img" style="background:linear-gradient(135deg,#080808,#1a1200);">
+          <div class="label-text" style="font-size:2.6rem;color:var(--c-white);">TMNGW<br><span style="font-size:0.9rem;color:var(--c-red);">Snapback</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Snapback</h4>
+          <div class="meta">Adjustable · One size</div>
+          <div class="merch-price">$35</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="accessories">
+        <div class="merch-img" style="background:linear-gradient(135deg,#0a001a,#1a0a2a);">
+          <div class="label-text" style="font-size:2.6rem;">🔖<br><span style="font-size:1.2rem;color:var(--c-white);">STICKERS</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Sticker Pack</h4>
+          <div class="meta">5-piece · Weatherproof vinyl</div>
+          <div class="merch-price">$12</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="accessories">
+        <div class="merch-img" style="background:linear-gradient(135deg,#100800,#1a1000);">
+          <div class="label-text" style="font-size:2.6rem;">👜<br><span style="font-size:1.2rem;color:var(--c-white);">TMNGW</span></div>
+        </div>
+        <div class="merch-info">
+          <h4>TMNGW Tote Bag</h4>
+          <div class="meta">Heavy canvas · One size</div>
+          <div class="merch-price">$28</div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="showModal()">Shop Now</button>
+        </div>
+      </div>
+
+      <div class="merch-card" data-category="apparel" style="border-color:rgba(200,146,30,0.3);">
+        <div class="merch-img" style="background:linear-gradient(135deg,#1a1000,#2d1f00);">
+          <div class="merch-badge">Save 20%</div>
+          <div class="label-text" style="font-size:2.6rem;color:var(--c-gold);">STARTER<br>BUNDLE</div>
+        </div>
+        <div class="merch-info">
+          <h4>Starter Bundle</h4>
+          <div class="meta">Tee + Hat + Sticker Pack</div>
+          <div class="merch-price" style="color:var(--c-gold);">$68 <span style="text-decoration:line-through;color:var(--c-muted);font-weight:400;font-size:0.85rem;">$87</span></div>
+          <button class="btn btn-gold btn-sm" style="width:100%;" onclick="showModal()">Shop Bundle</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PATREON BANNER -->
+    <div class="card fade-up" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:28px 36px;margin-top:32px;border-color:rgba(200,146,30,0.2);background:linear-gradient(135deg,#0e0e08,var(--c-card));">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.12em;color:var(--c-gold);margin-bottom:4px;">Patreon Members</div>
+        <h4 style="margin-bottom:4px;">Get Up to 20% Off</h4>
+        <p style="color:var(--c-muted-2);font-size:0.88rem;">Join Patreon for exclusive discounts and early access to new drops.</p>
+      </div>
+      <a href="patreon.html" class="btn btn-gold" style="flex-shrink:0;">Join Patreon ★</a>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div style="font-size:3rem;margin-bottom:16px;">🛍️</div>
+    <h3 style="margin-bottom:10px;">Store Coming Soon</h3>
+    <p style="color:var(--c-muted-2);margin-bottom:24px;line-height:1.7;font-size:0.92rem;">Our merch store is being set up. Follow us on Instagram or join Patreon to get early access and member discounts when we launch.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://www.instagram.com/ThisMightNotGoWell" target="_blank" rel="noopener" class="btn btn-primary">Follow on IG</a>
+      <button onclick="closeModal()" class="btn btn-ghost">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">TMNG<span class="logo-accent">W</span></div>
+        <p>This Might Not Go Well — the culture podcast for the intellectual who loves to talk that slick talk. Established 2020 · New York City.</p>
+        <p class="tagline">"The conversations you wish you could have on social media — without the filter."</p>
+        <div class="social-links" style="margin-top:20px;">
+          <a href="https://www.instagram.com/ThisMightNotGoWell" target="_blank" rel="noopener" class="social-link">IG</a>
+          <a href="https://twitter.com/Thismightnotgo1" target="_blank" rel="noopener" class="social-link">X</a>
+          <a href="https://www.tiktok.com/@thismightnotgowell" target="_blank" rel="noopener" class="social-link">TT</a>
+          <a href="https://www.youtube.com/@ThisMightNotGoWell" target="_blank" rel="noopener" class="social-link">YT</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Navigate</h5><a href="index.html">Home</a><a href="about.html">About</a><a href="booking.html">Booking</a><a href="patreon.html">Patreon</a><a href="merch.html">Merch</a><a href="sponsors.html">Advertise</a></div>
+      <div class="footer-col"><h5>Listen</h5><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a><a href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a><a href="https://www.youtube.com/@ThisMightNotGoWell" target="_blank" rel="noopener">YouTube</a><a href="https://www.iheart.com" target="_blank" rel="noopener">iHeartRadio</a><a href="https://music.amazon.com/podcasts" target="_blank" rel="noopener">Amazon Music</a></div>
+      <div class="footer-col"><h5>Connect</h5><a href="https://www.instagram.com/ThisMightNotGoWell" target="_blank" rel="noopener">Instagram</a><a href="https://twitter.com/Thismightnotgo1" target="_blank" rel="noopener">Twitter / X</a><a href="https://www.tiktok.com/@thismightnotgowell" target="_blank" rel="noopener">TikTok</a><a href="https://linktr.ee/Thismightnotgowell" target="_blank" rel="noopener">Linktree</a><a href="https://patreon.com/thismightnotgowell" target="_blank" rel="noopener">Patreon</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 This Might Not Go Well Podcast · Est. 2020 · New York City</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/ThisMightNotGoWell" target="_blank" rel="noopener" class="social-link">IG</a>
+        <a href="https://twitter.com/Thismightnotgo1" target="_blank" rel="noopener" class="social-link">X</a>
+        <a href="https://www.tiktok.com/@thismightnotgowell" target="_blank" rel="noopener" class="social-link">TT</a>
+        <a href="https://www.youtube.com/@ThisMightNotGoWell" target="_blank" rel="noopener" class="social-link">YT</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);} }), {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  function showModal() { document.getElementById('modal').classList.add('open'); }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.merch-card').forEach(c => {
+        c.style.display = (f === 'all' || c.dataset.category === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
