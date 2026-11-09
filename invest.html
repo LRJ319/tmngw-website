@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Check – This Might Not Go Well</title>
+  <meta name="description" content="The TMNGW Stock Check: a 5-step protocol for new investors to grade a stock and size a position based on the money they actually have." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .step-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--c-red); line-height:1; }
+    .gate { display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--c-border); }
+    .gate:last-child { border-bottom:none; }
+    .gate input { width:20px; height:20px; margin-top:3px; accent-color:var(--c-red); flex-shrink:0; }
+    .gate strong { display:block; color:var(--c-white); font-size:0.95rem; }
+    .gate span { color:var(--c-muted-2); font-size:0.86rem; }
+
+    .score-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    .score-table th { text-align:left; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--c-muted); padding:10px 8px; border-bottom:1px solid var(--c-border-2); }
+    .score-table td { padding:12px 8px; border-bottom:1px solid var(--c-border); vertical-align:top; color:var(--c-muted-2); }
+    .score-table td:first-child { color:var(--c-white); font-weight:600; }
+    .score-table .grp td { background:var(--c-card-2); color:var(--c-red); font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; padding:8px; }
+    .score-table select { background:var(--c-surface); color:var(--c-white); border:1px solid var(--c-border-2); border-radius:var(--r-sm); padding:8px; font:inherit; width:100%; min-width:150px; }
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+    .flag { display:flex; gap:12px; align-items:flex-start; padding:10px 0; color:var(--c-muted-2); font-size:0.9rem; }
+    .flag input { width:18px; height:18px; margin-top:2px; accent-color:#d64545; flex-shrink:0; }
+
+    .result { border-radius:var(--r-lg); padding:28px; background:var(--c-card); border:1px solid var(--c-border-2); }
+    .result-grade { font-family:'Bebas Neue',sans-serif; font-size:3.2rem; line-height:1; }
+    .g-strong { color:#3fb871; } .g-buy { color:var(--c-red); } .g-watch { color:var(--c-gold); } .g-pass { color:#d64545; }
+    .kv { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--c-border); font-size:0.92rem; }
+    .kv:last-child { border-bottom:none; }
+    .kv span:first-child { color:var(--c-muted-2); }
+    .kv span:last-child { color:var(--c-white); font-weight:700; text-align:right; }
+    .note { font-size:0.86rem; color:var(--c-muted-2); line-height:1.65; margin-top:16px; }
+    .warn { border-left:3px solid var(--c-gold); padding:12px 16px; background:rgba(200,146,30,0.06); border-radius:0 var(--r-sm) var(--r-sm) 0; font-size:0.88rem; color:var(--c-muted-2); margin-top:16px; }
+    .tranche { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-top:12px; }
+    .tranche div { background:var(--c-surface); border:1px solid var(--c-border); border-radius:var(--r-sm); padding:12px; text-align:center; }
+    .tranche b { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--c-white); }
+    .tranche small { color:var(--c-muted); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; }
+    .rules li { padding:10px 0 10px 26px; position:relative; color:var(--c-muted-2); font-size:0.92rem; border-bottom:1px solid var(--c-border); }
+    .rules li::before { content:'→'; position:absolute; left:0; color:var(--c-red); font-weight:700; }
+    @media (max-width:640px){ .form-row{ grid-template-columns:1fr; } .container{ padding:0 16px; } }
+  </style>
+</head>
+<body>
+
+<nav id="nav" class="scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">TMNG<span class="logo-accent">W</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="booking.html">Booking</a>
+      <a href="patreon.html">Patreon</a>
+      <a href="merch.html">Merch</a>
+      <a href="invest.html" class="active">Stock Check</a>
+      <a href="sponsors.html">Advertise</a>
+      <a href="sponsors.html" class="btn btn-primary btn-sm nav-cta">Sponsor Us</a>
+    </div>
+    <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="2" y1="6" x2="20" y2="6"/><line x1="2" y1="11" x2="20" y2="11"/><line x1="2" y1="16" x2="20" y2="16"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="container page-hero-content">
+    <div class="eyebrow" style="justify-content:center;">Money Talk · New Investors</div>
+    <h1 style="margin-bottom:16px;">The Stock<br><span style="color:var(--c-red);">Check</span></h1>
+    <p class="lead" style="max-width:580px; margin:0 auto;">Five steps. Grade the stock, then size the bet to the money you actually have. No hype, no guessing.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section--sm">
+  <div class="container">
+    <div class="grid-4" style="gap:20px;">
+      <div class="card card--flat"><div class="step-num">01</div><h4 style="margin:8px 0 6px;">Ready Check</h4><p class="text-muted" style="font-size:0.86rem;">Make sure your money is ready before you pick anything.</p></div>
+      <div class="card card--flat"><div class="step-num">02</div><h4 style="margin:8px 0 6px;">Red Flags</h4><p class="text-muted" style="font-size:0.86rem;">Any one of these and you walk away.</p></div>
+      <div class="card card--flat"><div class="step-num">03</div><h4 style="margin:8px 0 6px;">Scorecard</h4><p class="text-muted" style="font-size:0.86rem;">10 checks, 0–2 points each. Out of 20.</p></div>
+      <div class="card card--flat"><div class="step-num">04–05</div><h4 style="margin:8px 0 6px;">Size &amp; Plan</h4><p class="text-muted" style="font-size:0.86rem;">How much to put in, how to buy it, when to re-check.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1 -->
+<section class="section--sm">
+  <div class="container">
+    <div class="grid-2" style="gap:56px; align-items:start;">
+      <div>
+        <div class="eyebrow">Step 01</div>
+        <h2 style="margin-bottom:16px;">Ready Check</h2>
+        <p class="text-muted" style="margin-bottom:20px;">Stocks are for money you can leave alone for 5+ years. Your numbers below decide how much of your cash is actually investable — the calculator handles the math.</p>
+        <div class="gate"><input type="checkbox" id="g1"><label for="g1"><strong>Emergency fund covered</strong><span>3–6 months of expenses in a high-yield savings account.</span></label></div>
+        <div class="gate"><input type="checkbox" id="g2"><label for="g2"><strong>No high-interest debt</strong><span>Credit cards and anything above ~8% get paid first. Paying off 24% APR is a guaranteed 24% return.</span></label></div>
+        <div class="gate"><input type="checkbox" id="g3"><label for="g3"><strong>Free money captured</strong><span>If your job matches retirement contributions, max the match first.</span></label></div>
+        <div class="gate"><input type="checkbox" id="g4"><label for="g4"><strong>5-year money</strong><span>You won't need this cash for a down payment, tuition, or bills in the next 5 years.</span></label></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Your Capital</div>
+        <div class="form-group"><label for="cash">Cash available to invest ($)</label><input type="number" id="cash" min="0" step="100" value="5000"></div>
+        <div class="form-row">
+          <div class="form-group"><label for="expenses">Monthly expenses ($)</label><input type="number" id="expenses" min="0" step="50" value="3000"></div>
+          <div class="form-group"><label for="efund">Emergency fund saved ($)</label><input type="number" id="efund" min="0" step="100" value="18000"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="debt">High-interest debt ($)</label><input type="number" id="debt" min="0" step="100" value="0"></div>
+          <div class="form-group"><label for="months">Emergency target (months)</label>
+            <select id="months"><option value="3">3 months</option><option value="4">4 months</option><option value="6" selected>6 months</option></select></div>
+        </div>
+        <div class="form-group"><label for="risk">Risk comfort</label>
+          <select id="risk">
+            <option value="conservative">Conservative — a 30% drop would keep me up at night</option>
+            <option value="moderate" selected>Moderate — I can ride out a rough year</option>
+            <option value="aggressive">Aggressive — long horizon, I won't panic-sell</option>
+          </select></div>
+        <div class="form-row">
+          <div class="form-group"><label for="ticker">Ticker</label><input type="text" id="ticker" placeholder="e.g. ABCD" maxlength="8"></div>
+          <div class="form-group"><label for="price">Share price ($)</label><input type="number" id="price" min="0" step="0.01" value="100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="section--sm">
+  <div class="container">
+    <div class="eyebrow">Step 02</div>
+    <h2 style="margin-bottom:12px;">Red Flags</h2>
+    <p class="text-muted" style="margin-bottom:20px; max-width:640px;">Check any that apply. One check means the stock is a <strong style="color:var(--c-white);">Pass</strong> for a new investor — no matter how good the scorecard looks.</p>
+    <div class="grid-2" style="gap:8px 40px;">
+      <label class="flag"><input type="checkbox" class="rf">Share price under $5 (penny stock)</label>
+      <label class="flag"><input type="checkbox" class="rf">Company worth less than $2 billion (small cap = big swings)</label>
+      <label class="flag"><input type="checkbox" class="rf">Negative free cash flow 3 years in a row</label>
+      <label class="flag"><input type="checkbox" class="rf">Share count up 10%+ in a year (your slice is getting diluted)</label>
+      <label class="flag"><input type="checkbox" class="rf">Accounting restatement, SEC probe, or auditor change</label>
+      <label class="flag"><input type="checkbox" class="rf">You found it from a TikTok, group chat, or "it's about to run" post</label>
+      <label class="flag"><input type="checkbox" class="rf">You can't explain how it makes money in one sentence</label>
+      <label class="flag"><input type="checkbox" class="rf">Stock is up 100%+ in the last 3 months</label>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="section--sm">
+  <div class="container">
+    <div class="eyebrow">Step 03</div>
+    <h2 style="margin-bottom:12px;">Scorecard</h2>
+    <p class="text-muted" style="margin-bottom:24px; max-width:680px;">Pull the numbers from the stock's page on Yahoo Finance, your brokerage app, or the company's latest 10-K. Compare to the company's own history and to 2–3 direct competitors.</p>
+    <div class="table-wrap card" style="padding:8px 16px;">
+      <table class="score-table" id="scorecard">
+        <thead><tr><th>Check</th><th>Where to find it</th><th style="width:220px;">Score</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4-5 RESULT -->
+<section class="section--sm">
+  <div class="container">
+    <div class="grid-2" style="gap:32px; align-items:start;">
+      <div class="result" id="result">
+        <div class="eyebrow">Step 04 · Verdict</div>
+        <div class="result-grade" id="grade">—</div>
+        <div style="color:var(--c-muted-2); margin:6px 0 18px;" id="gradeSub"></div>
+        <div class="kv"><span>Score</span><span id="scoreOut">—</span></div>
+        <div class="kv"><span>Investable capital</span><span id="investOut">—</span></div>
+        <div class="kv"><span>Index-fund core</span><span id="coreOut">—</span></div>
+        <div class="kv"><span>Individual-stock bucket</span><span id="bucketOut">—</span></div>
+        <div class="kv"><span>Max for any one stock</span><span id="maxOut">—</span></div>
+        <div class="kv"><span>Recommended for this stock</span><span id="recOut" style="color:var(--c-red);">—</span></div>
+        <div class="kv"><span>≈ Shares at current price</span><span id="sharesOut">—</span></div>
+        <div id="warnings"></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:24px;">
+          <div class="eyebrow">Step 05 · Buy Plan</div>
+          <p class="text-muted" style="font-size:0.9rem;" id="planText">Fill in the scorecard to get a plan.</p>
+          <div class="tranche" id="tranches"></div>
+        </div>
+        <div class="card">
+          <div class="eyebrow">Hold Rules</div>
+          <ul class="rules">
+            <li>Write your reason for buying in one sentence. That's your thesis.</li>
+            <li>Re-run this check every quarter after earnings.</li>
+            <li>Down 20%? Re-score it. Thesis intact and score still 12+ — hold or add the next tranche. Score dropped or a red flag showed up — sell.</li>
+            <li>Never let one stock grow past 10% of your portfolio. Trim it back.</li>
+            <li>Don't check the price daily. Check the business quarterly.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:32px; text-align:center;">Educational tool from the TMNGW team, not personalized financial advice. Numbers are guidelines — do your own research or talk to a fiduciary advisor before investing.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">TMNG<span class="logo-accent">W</span></div>
+        <p>This Might Not Go Well — the culture podcast for the intellectual who loves to talk that slick talk. Established 2020 · New York City.</p>
+        <p class="tagline">"The conversations you wish you could have on social media — without the filter."</p>
+      </div>
+      <div class="footer-col"><h5>Navigate</h5><a href="index.html">Home</a><a href="about.html">About</a><a href="booking.html">Booking</a><a href="patreon.html">Patreon</a><a href="merch.html">Merch</a><a href="invest.html">Stock Check</a><a href="sponsors.html">Advertise</a></div>
+      <div class="footer-col"><h5>Listen</h5><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a><a href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a><a href="https://www.youtube.com/@ThisMightNotGoWell" target="_blank" rel="noopener">YouTube</a></div>
+      <div class="footer-col"><h5>Connect</h5><a href="https://www.instagram.com/ThisMightNotGoWell" target="_blank" rel="noopener">Instagram</a><a href="https://twitter.com/Thismightnotgo1" target="_blank" rel="noopener">Twitter / X</a><a href="https://www.tiktok.com/@thismightnotgowell" target="_blank" rel="noopener">TikTok</a><a href="https://patreon.com/thismightnotgowell" target="_blank" rel="noopener">Patreon</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 This Might Not Go Well Podcast · Est. 2020 · New York City</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+
+// ── Scorecard definition: [group, check, where, [label for 2, 1, 0]]
+const CHECKS = [
+  ['Business', 'Revenue growth (3-yr avg)', 'Financials → Income statement', ['10%+ per year', '0–10% per year', 'Shrinking']],
+  ['Business', 'Profitable', 'Net income + free cash flow', ['Both positive', 'One positive', 'Neither']],
+  ['Business', 'Operating margin', 'Statistics → Margins', ['15%+', '5–15%', 'Under 5%']],
+  ['Business', 'Competitive edge (moat)', 'Brand, network, switching costs, scale', ['Clear & durable', 'Some edge', 'Easy to copy']],
+  ['Health', 'Debt-to-equity', 'Statistics → Balance sheet', ['Under 0.5', '0.5–1.5', 'Over 1.5']],
+  ['Health', 'Current ratio', 'Statistics → Balance sheet', ['Over 1.5', '1.0–1.5', 'Under 1.0']],
+  ['Health', 'Return on equity (ROE)', 'Statistics → Management effectiveness', ['15%+', '8–15%', 'Under 8%']],
+  ['Price', 'P/E vs. its 5-yr average & peers', 'Statistics → Valuation', ['Below', 'In line', 'Well above / no earnings']],
+  ['Price', 'PEG ratio', 'Statistics → Valuation', ['Under 1.0', '1.0–2.0', 'Over 2.0 or negative']],
+  ['Price', 'Analyst & insider signal', 'Analysis tab · Insider transactions', ['Insiders buying', 'Neutral', 'Heavy insider selling']],
+];
+
+const tbody = document.querySelector('#scorecard tbody');
+let lastGroup = '';
+const groupNames = { Business:'Business Quality', Health:'Financial Health', Price:'Valuation' };
+CHECKS.forEach(([g, name, where, opts], i) => {
+  if (g !== lastGroup) { tbody.insertAdjacentHTML('beforeend', `<tr class="grp"><td colspan="3">${groupNames[g]}</td></tr>`); lastGroup = g; }
+  tbody.insertAdjacentHTML('beforeend', `<tr><td>${name}</td><td>${where}</td><td>
+    <select class="sc" data-i="${i}" aria-label="${name}">
+      <option value="">Select…</option>
+      <option value="2">2 · ${opts[0]}</option>
+      <option value="1">1 · ${opts[1]}</option>
+      <option value="0">0 · ${opts[2]}</option>
+    </select></td></tr>`);
+});
+
+const $ = id => document.getElementById(id);
+const money = n => '$' + Math.max(0, n).toLocaleString('en-US', { maximumFractionDigits: 0 });
+const num = id => Math.max(0, parseFloat($(id).value) || 0);
+
+// Risk profile: share of investable capital for individual stocks, and cap per stock
+const RISK = {
+  conservative: { bucket: 0.10, cap: 0.03 },
+  moderate:     { bucket: 0.15, cap: 0.05 },
+  aggressive:   { bucket: 0.20, cap: 0.07 },
+};
+
+function calc() {
+  const cash = num('cash'), exp = num('expenses'), ef = num('efund'), debt = num('debt');
+  const months = +$('months').value, price = num('price');
+  const risk = RISK[$('risk').value];
+  const ticker = ($('ticker').value || 'this stock').toUpperCase();
+
+  // Investable capital: fill emergency fund gap, pay high-interest debt, then invest the rest
+  const efGap = Math.max(0, exp * months - ef);
+  const investable = Math.max(0, cash - efGap - debt);
+  const bucket = investable * risk.bucket;
+  const maxPos = investable * risk.cap;
+
+  // Score
+  const sels = [...document.querySelectorAll('.sc')];
+  const answered = sels.filter(s => s.value !== '').length;
+  const score = sels.reduce((t, s) => t + (+s.value || 0), 0);
+  const flags = document.querySelectorAll('.rf:checked').length;
+
+  let grade = '—', sub = 'Answer all 10 checks to get a verdict.', cls = '', mult = 0, tranches = 0;
+  if (answered === CHECKS.length) {
+    if (flags > 0)        { grade = 'Pass'; cls = 'g-pass'; sub = `${flags} red flag${flags > 1 ? 's' : ''}. Walk away.`; }
+    else if (score >= 16) { grade = 'Strong Buy'; cls = 'g-strong'; sub = 'Quality business at a fair price. Full position.'; mult = 1;   tranches = 3; }
+    else if (score >= 12) { grade = 'Starter Buy'; cls = 'g-buy';  sub = 'Solid, with gaps. Half position, earn the rest.'; mult = 0.5; tranches = 2; }
+    else if (score >= 8)  { grade = 'Watchlist'; cls = 'g-watch'; sub = 'Not yet. Re-check after next earnings or a price drop.'; }
+    else                  { grade = 'Pass'; cls = 'g-pass'; sub = 'Too many weak spots. Move on.'; }
+  }
+  const rec = maxPos * mult;
+
+  $('grade').textContent = grade;
+  $('grade').className = 'result-grade ' + cls;
+  $('gradeSub').textContent = sub;
+  $('scoreOut').textContent = `${score} / 20` + (answered < CHECKS.length ? ` (${answered}/10 answered)` : '');
+  $('investOut').textContent = money(investable);
+  $('coreOut').textContent = money(investable - bucket);
+  $('bucketOut').textContent = money(bucket);
+  $('maxOut').textContent = money(maxPos);
+  $('recOut').textContent = money(rec);
+  $('sharesOut').textContent = price > 0 && rec > 0 ? (rec / price).toFixed(2) + ' (fractional OK)' : '—';
+
+  // Warnings
+  const w = [];
+  if (efGap > 0) w.push(`Emergency fund is ${money(efGap)} short of ${months} months. That comes out of your cash first.`);
+  if (debt > 0) w.push(`${money(debt)} of high-interest debt gets paid before investing.`);
+  if (cash > 0 && investable === 0) w.push('Nothing is investable yet. Finish the Ready Check, then come back.');
+  if (rec > 0 && rec < 50) w.push('Position is small. Use a broker with fractional shares and no commissions.');
+  $('warnings').innerHTML = w.map(x => `<div class="warn">${x}</div>`).join('');
+
+  // Buy plan
+  const tEl = $('tranches');
+  if (rec > 0) {
+    const each = rec / tranches;
+    $('planText').innerHTML = mult === 1
+      ? `Buy <strong style="color:#fff">${ticker}</strong> in 3 equal buys, one a month. Spreading it out keeps one bad week from setting your price.`
+      : `Buy half now and half in 3 months. Add the remaining ${money(maxPos - rec)} only if it re-scores 16+ after next earnings.`;
+    tEl.innerHTML = Array.from({ length: tranches }, (_, i) =>
+      `<div><small>${mult === 1 ? 'Month ' + (i + 1) : (i === 0 ? 'Now' : 'Month 3')}</small><b>${money(each)}</b></div>`).join('');
+  } else {
+    $('planText').textContent = answered === CHECKS.length
+      ? `No buy. Put your monthly investing money into the index-fund core (a total market or S&P 500 fund) instead.`
+      : 'Fill in the scorecard to get a plan.';
+    tEl.innerHTML = '';
+  }
+}
+
+document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calc));
+calc();
+</script>
+</body>
+</html>
