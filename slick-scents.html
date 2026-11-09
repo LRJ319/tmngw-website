@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slick Scents — Content Playbook</title>
+<meta name="description" content="Slick Scents: faceless fragrance content for Instagram, TikTok and YouTube. Brand kit, avatar, opening sequence, script templates and posting system." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#08080a; --ink-2:#111116; --ink-3:#1a1a21; --line:#2a2a33;
+  --gold:#d4a64a; --gold-2:#f1d08a; --amber:#b8692a; --violet:#7b5cff; --violet-2:#b3a2ff;
+  --text:#f2eee6; --muted:#a39e94; --dim:#6e6a63;
+  --serif:'Bodoni Moda',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+section{padding:88px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.1;letter-spacing:-.01em}
+h2{font-size:clamp(32px,5vw,48px);margin:10px 0 14px}
+h3{font-size:22px;margin-bottom:8px}
+.lede{color:var(--muted);max-width:640px;font-size:17px}
+.gold{color:var(--gold)}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.card.lift{transition:border-color .2s,transform .2s}.card.lift:hover{border-color:var(--gold);transform:translateY(-2px)}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin:0 6px 6px 0}
+.tag.g{border-color:rgba(212,166,74,.5);color:var(--gold-2)}
+.tag.v{border-color:rgba(123,92,255,.5);color:var(--violet-2)}
+.mt{margin-top:40px}
+ul.clean{list-style:none}
+ul.clean li{padding:8px 0;border-bottom:1px dashed var(--line);color:var(--muted)}
+ul.clean li strong{color:var(--text)}
+ul.clean li:last-child{border-bottom:0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(8,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+nav .brand{font-family:var(--serif);font-weight:800;letter-spacing:.06em;text-decoration:none;white-space:nowrap}
+nav .links{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+nav .links::-webkit-scrollbar{display:none}
+nav .links a{font-size:13px;color:var(--muted);text-decoration:none;white-space:nowrap}
+nav .links a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{border-top:0;padding:72px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:720px;height:720px;background:radial-gradient(circle,rgba(212,166,74,.18),transparent 60%);pointer-events:none}
+.hero::after{content:"";position:absolute;left:-200px;bottom:-260px;width:600px;height:600px;background:radial-gradient(circle,rgba(123,92,255,.16),transparent 60%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(52px,9vw,104px);letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p.lede{margin:20px 0 28px;font-size:19px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 20px;border-radius:99px;text-decoration:none;border:1px solid var(--gold);color:var(--ink);background:var(--gold);cursor:pointer;font-family:var(--sans)}
+.btn.ghost{background:transparent;color:var(--gold)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap}
+.stats div{font-family:var(--mono);font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em}
+.stats b{display:block;font-family:var(--serif);font-size:30px;color:var(--text);letter-spacing:0;text-transform:none}
+
+/* AVATAR */
+.avatar-svg{width:100%;max-width:440px;display:block;margin:0 auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+.float{animation:float 4.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.float.d1{animation-delay:-.8s}.float.d2{animation-delay:-1.6s}.float.d3{animation-delay:-2.4s}.float.d4{animation-delay:-3.2s}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.field{stroke-dasharray:4 7;animation:dash 2.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-44}}
+.pulse{animation:pulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.float,.field,.pulse{animation:none}}
+
+/* LOGO */
+.logo-stage{background:var(--ink);border:1px solid var(--line);border-radius:var(--r);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+.logo-stage.light{background:#f4efe6}
+.logo-a{display:flex;align-items:center;gap:16px}
+.logo-a .word{font-family:var(--serif);font-weight:800;font-size:clamp(28px,4.4vw,44px);letter-spacing:.08em;line-height:1}
+.logo-a .word span{display:block;font-size:.42em;letter-spacing:.62em;color:var(--gold);font-family:var(--sans);font-weight:600;margin-top:8px}
+.logo-b{text-align:center}
+.logo-b .word{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(40px,6vw,64px);line-height:.9}
+.logo-b .word i{color:var(--gold);font-style:italic}
+.logo-b .sub{font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:var(--muted);margin-top:12px}
+.light .word{color:#141414}.light .logo-b .sub{color:#6b655b}
+.marks{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+.mark{width:72px;height:72px;border-radius:18px;background:var(--ink-3);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.mark.r{border-radius:50%}
+
+/* PALETTE */
+.swatch{border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.swatch .chip{height:96px}
+.swatch .meta{padding:12px 14px;background:var(--ink-2);font-size:13px}
+.swatch .meta code{font-family:var(--mono);color:var(--muted);font-size:12px}
+.type-row{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.type-row .lbl{font-family:var(--mono);font-size:11px;color:var(--dim);width:120px;text-transform:uppercase;letter-spacing:.1em}
+
+/* VOICE */
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.do-dont div{padding:14px 16px;border-radius:10px;font-size:14px}
+.do{background:rgba(212,166,74,.08);border:1px solid rgba(212,166,74,.3)}
+.dont{background:rgba(255,80,80,.06);border:1px solid rgba(255,80,80,.25);color:var(--muted)}
+.do b,.dont b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;margin-bottom:4px}
+.do b{color:var(--gold)}.dont b{color:#ff8a8a}
+
+/* OPENING TIMELINE */
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.beat{padding:20px;border-right:1px solid var(--line);background:var(--ink-2);position:relative}
+.beat:last-child{border-right:0}
+.beat .t{font-family:var(--mono);font-size:12px;color:var(--gold)}
+.beat .frame{aspect-ratio:9/16;background:#000;border-radius:8px;margin:12px 0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);overflow:hidden}
+.beat h4{font-size:15px;margin-bottom:4px}
+.beat p{font-size:13px;color:var(--muted)}
+
+/* PLATFORMS */
+.plat h3{display:flex;align-items:center;gap:10px}
+.plat .spec{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:14px 0}
+.plat .spec dt{font-family:var(--mono);font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+.plat .spec dd{color:var(--muted)}
+
+/* SCRIPTS */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 20px}
+.tab{background:var(--ink-2);border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:99px;font-size:14px;cursor:pointer;font-family:var(--sans)}
+.tab[aria-selected="true"]{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:600}
+.panel{display:none}.panel.on{display:block}
+.script-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start;margin-bottom:20px}
+.script-head p{color:var(--muted);max-width:620px}
+.hooks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.hook{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--ink-3)}
+.hook b{font-family:var(--mono);font-size:11px;color:var(--violet-2);letter-spacing:.1em;display:block;margin-bottom:6px}
+.hook p{font-family:var(--serif);font-size:18px;font-style:italic}
+table.beats{width:100%;border-collapse:collapse;font-size:14px}
+table.beats th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--line)}
+table.beats td{padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+table.beats td:first-child{font-family:var(--mono);color:var(--gold);white-space:nowrap;font-size:12px}
+table.beats td.vo{color:var(--text)}
+.fill{color:var(--gold-2);background:rgba(212,166,74,.1);padding:0 4px;border-radius:4px}
+.copybar{display:flex;justify-content:flex-end;margin-top:14px}
+.copy{background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer}
+.copy:hover{border-color:var(--gold);color:var(--gold)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--ink-2)}
+
+/* CALENDAR */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.day{background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:14px;min-height:150px}
+.day .d{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.1em}
+.day h4{font-size:14px;margin:8px 0 6px}
+.day p{font-size:12px;color:var(--muted)}
+.day.batch{border-color:var(--violet);background:linear-gradient(180deg,rgba(123,92,255,.12),var(--ink-2))}
+.day.post{border-color:rgba(212,166,74,.5)}
+.day.off{opacity:.55}
+
+pre.prompt{white-space:pre-wrap;font-family:var(--mono);font-size:13px;color:var(--muted);background:var(--ink-3);border:1px solid var(--line);border-radius:12px;padding:18px;line-height:1.7}
+.callout{border-left:3px solid var(--gold);padding:16px 20px;background:rgba(212,166,74,.06);border-radius:0 12px 12px 0;color:var(--muted)}
+.callout strong{color:var(--text)}
+footer{padding:48px 0;border-top:1px solid var(--line);color:var(--dim);font-size:13px;text-align:center}
+footer .sig{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--gold);margin-bottom:8px}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr}
+  .beat{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:90px 1fr;gap:4px 16px;align-items:start}
+  .beat .frame{grid-row:span 3;margin:0;width:90px}
+  .week{grid-template-columns:1fr 1fr}
+  .hooks,.do-dont{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  section{padding:64px 0}
+  .wrap{padding:0 16px}
+  .week{grid-template-columns:1fr}
+  .card{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="brand">SLICK <span class="gold">SCENTS</span></a>
+    <div class="links">
+      <a href="#avatar">Avatar</a>
+      <a href="#logo">Logo</a>
+      <a href="#brand">Brand Kit</a>
+      <a href="#opening">Opening</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#scripts">Scripts</a>
+      <a href="#calendar">Calendar</a>
+      <a href="#captions">Captions</a>
+      <a href="#production">Production</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═════════ 01 OPENING / HERO ═════════ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Content Playbook · IG · TikTok · YouTube</div>
+      <h1>Slick<br/><em>Scents.</em></h1>
+      <p class="lede">Faceless fragrance content. No face, no fluff — just the bottles, the notes, and a voice that tells you what's worth your money. Every bottle answers to one hand.</p>
+      <div class="btn-row">
+        <a href="#scripts" class="btn">Script Templates →</a>
+        <a href="#avatar" class="btn ghost">Meet the Avatar</a>
+      </div>
+      <div class="stats">
+        <div><b>4×</b>posts / week</div>
+        <div><b>1</b>batch session</div>
+        <div><b>3</b>platforms</div>
+        <div><b>0</b>face reveals</div>
+      </div>
+    </div>
+    <!-- Avatar (hero instance) -->
+    <div id="heroAvatar"></div>
+  </div>
+</header>
+
+<!-- ═════════ 02 AVATAR ═════════ -->
+<section id="avatar">
+  <div class="wrap">
+    <div class="eyebrow">02 · Character</div>
+    <h2>The Collector</h2>
+    <p class="lede">The face of the brand has no face. A hooded figure in a long dark coat, head lost in shadow, hands raised — and the bottles rise with them. He doesn't pick up fragrance. He calls it.</p>
+
+    <div class="grid g2 mt">
+      <div class="card" style="display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#1c1726,var(--ink-2))">
+        <div id="mainAvatar" style="width:100%"></div>
+      </div>
+      <div class="grid" style="gap:16px">
+        <div class="card">
+          <h3>Character rules</h3>
+          <ul class="clean">
+            <li><strong>Never show a face.</strong> The hood stays up. Shadow does the work.</li>
+            <li><strong>Hands are the hero.</strong> Black gloves + one gold ring. Same on the avatar and in real footage so the two match.</li>
+            <li><strong>Bottles orbit, never sit.</strong> On thumbnails and intros they float — magnetic, controlled, calm.</li>
+            <li><strong>Gold = control, violet = energy.</strong> Gold glow on the hands, violet field lines between hand and bottle.</li>
+            <li><strong>He's unbothered.</strong> Posture is relaxed. Power without trying.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Where he shows up</h3>
+          <span class="tag g">Profile picture</span><span class="tag g">Intro sting</span><span class="tag g">Thumbnails</span><span class="tag">Outro card</span><span class="tag">Merch later</span><span class="tag">Story highlights</span>
+          <p style="color:var(--muted);font-size:14px;margin-top:10px">Real footage = your gloved hands + bottles. Avatar = brand moments. Your voice ties both together.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mt">
+      <strong>Pushback:</strong> faceless only works if something else is instantly recognizable. Lock three signatures and never break them — <strong>the gloves + ring</strong>, <strong>your voice</strong>, and <strong>the 2-second bottle-rise open</strong>. If a viewer can't tell it's Slick Scents with the sound off in the first second, the frame isn't on-brand.
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 03 LOGO ═════════ -->
+<section id="logo">
+  <div class="wrap">
+    <div class="eyebrow">03 · Logo</div>
+    <h2>Two directions</h2>
+    <p class="lede">Version A is clean luxury — reads like a fragrance house. Version B has more swagger — reads like a personality. Pick one as primary; the other becomes the secondary lockup.</p>
+
+    <div class="grid g2 mt">
+      <div>
+        <div class="logo-stage">
+          <div class="logo-a">
+            <svg width="62" height="86" viewBox="0 0 62 86" aria-hidden="true"><use href="#bottleMark"/></svg>
+            <div class="word">SLICK<span>SCENTS</span></div>
+          </div>
+        </div>
+        <div class="logo-stage light" style="margin-top:12px;aspect-ratio:16/6">
+          <div class="logo-a">
+            <svg width="44" height="62" viewBox="0 0 62 86" aria-hidden="true"><use href="#bottleMarkDark"/></svg>
+            <div class="word" style="font-size:30px">SLICK<span style="color:#9a7428">SCENTS</span></div>
+          </div>
+        </div>
+        <h3 style="margin-top:18px">A · The House</h3>
+        <p style="color:var(--muted);font-size:14px">Bodoni caps, wide-tracked "SCENTS," bottle mark with an "S" stopper. Feels like it belongs on a box.</p>
+      </div>
+      <div>
+        <div class="logo-stage" style="background:radial-gradient(circle at 50% 60%,#1d1730,var(--ink))">
+          <div class="logo-b">
+            <svg width="200" height="56" viewBox="0 0 200 56" aria-hidden="true" style="display:block;margin:0 auto 6px">
+              <path d="M20 50 Q100 -14 180 50" fill="none" stroke="#7b5cff" stroke-width="1.5" class="field"/>
+              <path d="M44 50 Q100 6 156 50" fill="none" stroke="#d4a64a" stroke-width="1.5" class="field"/>
+              <g transform="translate(92 6)"><rect x="4" y="0" width="8" height="5" rx="1" fill="#d4a64a"/><rect x="0" y="5" width="16" height="20" rx="3" fill="#d4a64a" opacity=".85"/></g>
+            </svg>
+            <div class="word">Slick <i>Scents</i></div>
+            <div class="sub">SMELL LIKE YOU MEANT IT</div>
+          </div>
+        </div>
+        <div class="logo-stage light" style="margin-top:12px;aspect-ratio:16/6">
+          <div class="logo-b"><div class="word" style="font-size:40px">Slick <i style="color:#9a7428">Scents</i></div></div>
+        </div>
+        <h3 style="margin-top:18px">B · The Personality</h3>
+        <p style="color:var(--muted);font-size:14px">Italic Bodoni, magnetic arcs pulling a bottle overhead, tagline underneath. More motion, more attitude.</p>
+      </div>
+    </div>
+
+    <h3 class="mt">Icon marks (profile pics, watermark)</h3>
+    <div class="marks">
+      <div class="mark"><svg width="34" height="48" viewBox="0 0 62 86"><use href="#bottleMark"/></svg></div>
+      <div class="mark r"><span style="font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-.04em">S<span class="gold">S</span></span></div>
+      <div class="mark" style="background:var(--gold)"><span style="font-family:var(--serif);font-style:italic;font-size:30px;color:var(--ink)">ss</span></div>
+      <div class="mark r" style="background:#000;overflow:hidden"><div id="miniAvatar" style="width:72px;margin-top:10px"></div></div>
+    </div>
+    <p style="color:var(--muted);font-size:14px;margin-top:12px">Recommendation: avatar circle as the profile pic on all three platforms, bottle mark as the corner watermark on every video.</p>
+  </div>
+</section>
+
+<!-- ═════════ 04 BRAND KIT ═════════ -->
+<section id="brand">
+  <div class="wrap">
+    <div class="eyebrow">04 · Brand Kit</div>
+    <h2>Look, type, voice</h2>
+
+    <div class="grid g4 mt">
+      <div class="swatch"><div class="chip" style="background:#08080a"></div><div class="meta"><b>Obsidian</b><br/><code>#08080A</code> · backgrounds</div></div>
+      <div class="swatch"><div class="chip" style="background:#d4a64a"></div><div class="meta"><b>Slick Gold</b><br/><code>#D4A64A</code> · logo, highlights</div></div>
+      <div class="swatch"><div class="chip" style="background:#b8692a"></div><div class="meta"><b>Amber Oud</b><br/><code>#B8692A</code> · warm accents</div></div>
+      <div class="swatch"><div class="chip" style="background:#7b5cff"></div><div class="meta"><b>Field Violet</b><br/><code>#7B5CFF</code> · energy, motion</div></div>
+    </div>
+
+    <div class="card mt">
+      <div class="type-row"><span class="lbl">Display</span><span style="font-family:var(--serif);font-size:40px;font-weight:700">Bodoni Moda</span></div>
+      <div class="type-row"><span class="lbl">Accent</span><span style="font-family:var(--serif);font-size:30px;font-style:italic;color:var(--gold)">Smell like you meant it.</span></div>
+      <div class="type-row"><span class="lbl">On-screen text</span><span style="font-family:var(--sans);font-size:24px;font-weight:700">Inter Bold — CAPTIONS &amp; OVERLAYS</span></div>
+      <div class="type-row" style="border:0"><span class="lbl">Data / ratings</span><span style="font-family:var(--mono);font-size:18px;color:var(--muted)">LONGEVITY 8/10 · PROJECTION 7/10</span></div>
+    </div>
+
+    <div class="grid g2 mt">
+      <div class="card">
+        <h3>Voice</h3>
+        <p style="color:var(--muted);margin-bottom:14px">Smooth, confident, a little funny. The friend who always smells good and tells you straight what to buy — and what to skip.</p>
+        <span class="tag g">Direct</span><span class="tag g">Smooth</span><span class="tag g">Honest</span><span class="tag v">Playful</span><span class="tag v">NYC</span>
+        <div class="callout" style="margin-top:16px;font-size:14px"><strong>Catchphrases:</strong> Open — <em>"Let's get slick."</em> · Close — <em>"Stay slick."</em> · Verdict — <em>"Cop, wait, or pass."</em></div>
+      </div>
+      <div class="card">
+        <h3>Say it like this</h3>
+        <div class="do-dont">
+          <div class="do"><b>DO</b>"This lasts 9 hours on me. Office safe, date ready."</div>
+          <div class="dont"><b>DON'T</b>"This exquisite olfactory journey unfolds beautifully…"</div>
+          <div class="do"><b>DO</b>"$140 retail. Wait for a sale."</div>
+          <div class="dont"><b>DON'T</b>"It might be worth considering at some point…"</div>
+          <div class="do"><b>DO</b>"Smells like fresh laundry and money."</div>
+          <div class="dont"><b>DON'T</b>Reading the note pyramid off the box.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt">Content pillars</h3>
+    <div class="grid g4" style="margin-top:14px">
+      <div class="card lift"><div class="eyebrow">40%</div><h3>The Verdict</h3><p style="color:var(--muted);font-size:14px">Single-bottle reviews. Cop, wait, or pass.</p></div>
+      <div class="card lift"><div class="eyebrow">25%</div><h3>The Occasion</h3><p style="color:var(--muted);font-size:14px">Top 3 for date night, office, summer, wedding season.</p></div>
+      <div class="card lift"><div class="eyebrow">20%</div><h3>The Money</h3><p style="color:var(--muted);font-size:14px">Designer vs. dupe, budget picks, blind-buy safety.</p></div>
+      <div class="card lift"><div class="eyebrow">15%</div><h3>The Culture</h3><p style="color:var(--muted);font-size:14px">What athletes and artists wear, compliment tests, hot takes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 05 OPENING SEQUENCE ═════════ -->
+<section id="opening">
+  <div class="wrap">
+    <div class="eyebrow">05 · Signature Open</div>
+    <h2>The 2-second bottle rise</h2>
+    <p class="lede">Every video opens the same way so the feed learns it. Keep it under 2 seconds on Shorts/Reels/TikTok — the hook lands at 0:02. YouTube long-form can run the full 5-second version.</p>
+
+    <div class="timeline mt">
+      <div class="beat">
+        <span class="t">0:00.0</span>
+        <div class="frame"><svg viewBox="0 0 90 160" width="100%"><rect width="90" height="160" fill="#000"/><rect x="38" y="118" width="14" height="22" rx="3" fill="#2a2a33"/></svg></div>
+        <h4>Black frame</h4><p>Bottle sits in darkness. Low bass hum starts.</p>
+      </div>
+      <div class="beat">
+        <span class="t">0:00.4</span>
+        <div class="frame"><svg viewBox="0 0 90 160" width="100%"><rect width="90" height="160" fill="#000"/><ellipse cx="45" cy="150" rx="30" ry="8" fill="#d4a64a" opacity=".5"/><path d="M20 150 Q24 130 30 128" stroke="#111" stroke-width="10" stroke-linecap="round"/><path d="M70 150 Q66 130 60 128" stroke="#111" stroke-width="10" stroke-linecap="round"/><rect x="38" y="112" width="14" height="22" rx="3" fill="#6e5a2e"/></svg></div>
+        <h4>Gloves enter</h4><p>Gloved hands rise into frame, palms open. Gold glow under them.</p>
+      </div>
+      <div class="beat">
+        <span class="t">0:00.9</span>
+        <div class="frame"><svg viewBox="0 0 90 160" width="100%"><rect width="90" height="160" fill="#000"/><path d="M28 128 Q45 70 62 128" stroke="#7b5cff" stroke-width="1.2" fill="none" stroke-dasharray="3 4"/><rect x="38" y="62" width="14" height="22" rx="3" fill="#d4a64a"/><rect x="41" y="56" width="8" height="6" fill="#f1d08a"/></svg></div>
+        <h4>Bottle lifts</h4><p>Bottle floats up (string/clear-stand or edit). Violet field lines. "Whoosh."</p>
+      </div>
+      <div class="beat">
+        <span class="t">0:01.4</span>
+        <div class="frame"><svg viewBox="0 0 90 160" width="100%"><rect width="90" height="160" fill="#000"/><text x="45" y="76" text-anchor="middle" font-family="Bodoni Moda,serif" font-weight="800" font-size="13" fill="#f2eee6" letter-spacing="1">SLICK</text><text x="45" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="6" fill="#d4a64a" letter-spacing="3">SCENTS</text></svg></div>
+        <h4>Logo snap</h4><p>Hard cut to logo for 6 frames. Snap / spray sound.</p>
+      </div>
+      <div class="beat">
+        <span class="t">0:02.0</span>
+        <div class="frame"><svg viewBox="0 0 90 160" width="100%"><rect width="90" height="160" fill="#0c0c10"/><rect x="34" y="50" width="22" height="34" rx="4" fill="#b8692a"/><rect x="40" y="42" width="10" height="8" fill="#d4a64a"/><rect x="10" y="110" width="70" height="14" rx="3" fill="#d4a64a"/><text x="45" y="120" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="7" fill="#08080a">HOOK TEXT</text></svg></div>
+        <h4>"Let's get slick."</h4><p>VO line + hook text on screen. Content starts.</p>
+      </div>
+    </div>
+
+    <div class="grid g2 mt">
+      <div class="card">
+        <h3>Outro (last 3 sec)</h3>
+        <ul class="clean">
+          <li><strong>Visual:</strong> hands lower, bottle drops back to the table, avatar end card</li>
+          <li><strong>VO:</strong> "Cop, wait, or pass — tell me in the comments. Stay slick."</li>
+          <li><strong>Text:</strong> next video teaser or "Part 2 tomorrow"</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sound kit</h3>
+        <ul class="clean">
+          <li><strong>Hum</strong> — low sub-bass bed under the open</li>
+          <li><strong>Whoosh</strong> — on bottle lift</li>
+          <li><strong>Spray / snap</strong> — on logo hit</li>
+          <li><strong>Music bed</strong> — lo-fi or smooth R&amp;B instrumental, ducked under VO</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 06 PLATFORMS ═════════ -->
+<section id="platforms">
+  <div class="wrap">
+    <div class="eyebrow">06 · Platform Playbook</div>
+    <h2>One shoot, three platforms</h2>
+    <p class="lede">Film once in 9:16. Cut the same footage three ways. Don't make separate content for each app — change the hook, caption, and length.</p>
+
+    <div class="grid g3 mt">
+      <div class="card plat">
+        <h3><span class="tag g" style="margin:0">TikTok</span> The testing ground</h3>
+        <dl class="spec">
+          <dt>Length</dt><dd>20–45 sec</dd>
+          <dt>Cadence</dt><dd>4× / week</dd>
+          <dt>Hook</dt><dd>Text on screen by 0:01. Controversy works: "Overrated."</dd>
+          <dt>Win</dt><dd>Comments + shares. Reply to comments with video.</dd>
+        </dl>
+        <p style="font-size:13px;color:var(--dim)">Post here first. What hits gets reposted to Reels and Shorts.</p>
+      </div>
+      <div class="card plat">
+        <h3><span class="tag g" style="margin:0">Instagram</span> The showroom</h3>
+        <dl class="spec">
+          <dt>Length</dt><dd>Reels 15–30 sec · Carousels 5–7 slides</dd>
+          <dt>Cadence</dt><dd>3 Reels + 1 carousel / week</dd>
+          <dt>Hook</dt><dd>Aesthetic first frame — it's the grid thumbnail.</dd>
+          <dt>Win</dt><dd>Saves. "Save this for your next fragrance run."</dd>
+        </dl>
+        <p style="font-size:13px;color:var(--dim)">Carousels = "Top 5" lists. Stories = polls ("Cop or pass?").</p>
+      </div>
+      <div class="card plat">
+        <h3><span class="tag g" style="margin:0">YouTube</span> The vault</h3>
+        <dl class="spec">
+          <dt>Length</dt><dd>Shorts ≤60 sec · Long-form 8–12 min</dd>
+          <dt>Cadence</dt><dd>4 Shorts / week · 1 long-form / 2 weeks</dd>
+          <dt>Hook</dt><dd>Searchable titles: "Best Cologne for Men Under $100 (2026)"</dd>
+          <dt>Win</dt><dd>Watch time + search. Long-form is where money lives.</dd>
+        </dl>
+        <p style="font-size:13px;color:var(--dim)">Thumbnail: avatar + 1 bottle + 3 words max.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 07 SCRIPTS ═════════ -->
+<section id="scripts">
+  <div class="wrap">
+    <div class="eyebrow">07 · Script Templates</div>
+    <h2>Fill-in-the-blank scripts</h2>
+    <p class="lede">Every template has two hook versions — test both. Gold brackets are what you swap out. Hit <em>Copy</em> to paste into Notes.</p>
+
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="panels"></div>
+  </div>
+</section>
+
+<!-- ═════════ 08 CALENDAR ═════════ -->
+<section id="calendar">
+  <div class="wrap">
+    <div class="eyebrow">08 · Weekly System</div>
+    <h2>Batch once. Post all week.</h2>
+    <p class="lede">Built around your schedule: one batch session Saturday morning in your peak window, then the week just runs. Posting takes 5 minutes a day.</p>
+
+    <div class="week mt">
+      <div class="day batch"><div class="d">SAT · 7–9AM</div><h4>Batch shoot</h4><p>Film 4 videos + 1 long-form segment. Record all VO in one take session.</p></div>
+      <div class="day"><div class="d">SUN</div><h4>Edit + schedule</h4><p>CapCut templates. Schedule everything. 60 min.</p></div>
+      <div class="day post"><div class="d">MON</div><h4>The Verdict</h4><p>Single-bottle review. Strong start to the week.</p></div>
+      <div class="day off"><div class="d">TUE</div><h4>Engage</h4><p>Reply to comments with video. Story poll.</p></div>
+      <div class="day post"><div class="d">WED</div><h4>The Money</h4><p>Dupe vs. designer or budget pick.</p></div>
+      <div class="day post"><div class="d">THU</div><h4>The Occasion</h4><p>Top 3 for the weekend. IG carousel too.</p></div>
+      <div class="day post"><div class="d">FRI</div><h4>The Culture</h4><p>Hot take or compliment test. Highest energy.</p></div>
+    </div>
+
+    <div class="card mt">
+      <h3>Saturday batch checklist</h3>
+      <div class="grid g2" style="gap:0 30px">
+        <ul class="clean">
+          <li>☐ 4 scripts filled in (from the templates above)</li>
+          <li>☐ Bottles cleaned, labels facing camera</li>
+          <li>☐ Gloves + ring on</li>
+          <li>☐ Backdrop: black fabric or dark wood</li>
+        </ul>
+        <ul class="clean">
+          <li>☐ One warm key light + one gold/violet RGB rim light</li>
+          <li>☐ Phone locked at 4K 30fps, 9:16</li>
+          <li>☐ Signature open filmed once — reuse every week</li>
+          <li>☐ B-roll: spray mist, cap close-up, bottle spin (reuse bank)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 09 CAPTIONS ═════════ -->
+<section id="captions">
+  <div class="wrap">
+    <div class="eyebrow">09 · Captions &amp; CTAs</div>
+    <h2>Copy bank</h2>
+
+    <div class="grid g2 mt">
+      <div class="card">
+        <h3>Caption template — Version A (short)</h3>
+        <pre class="prompt" id="capA">[Fragrance name] — cop, wait, or pass? 👇
+Longevity [x]/10 · Projection [x]/10 · [Price]
+Stay slick. 🫡
+
+#slickscents #fragrancetok #colognereview #mensfragrance #smellgood</pre>
+        <div class="copybar"><button class="copy" data-copy="capA">Copy</button></div>
+      </div>
+      <div class="card">
+        <h3>Caption template — Version B (story)</h3>
+        <pre class="prompt" id="capB">Wore [fragrance] to [place] and got [number] compliments before noon.
+Here's why it works: [one-line reason].
+Save this for your next fragrance run.
+What should I review next?
+
+#slickscents #fragrance #colognetok #[brand] #[occasion]fragrance</pre>
+        <div class="copybar"><button class="copy" data-copy="capB">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="grid g3 mt">
+      <div class="card"><div class="eyebrow">Comment CTAs</div><ul class="clean" style="margin-top:8px"><li>"Cop, wait, or pass — go."</li><li>"Name one I should review next."</li><li>"Wrong answers only: what does this smell like?"</li></ul></div>
+      <div class="card"><div class="eyebrow">Save CTAs</div><ul class="clean" style="margin-top:8px"><li>"Save this before your next Sephora run."</li><li>"Screenshot the list."</li><li>"Send this to the friend who smells like Axe."</li></ul></div>
+      <div class="card"><div class="eyebrow">Follow CTAs</div><ul class="clean" style="margin-top:8px"><li>"Part 2 tomorrow — follow so you don't miss it."</li><li>"I test so you don't waste money."</li><li>"Stay slick. Follow for the next one."</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 10 PRODUCTION ═════════ -->
+<section id="production">
+  <div class="wrap">
+    <div class="eyebrow">10 · Production</div>
+    <h2>Make the avatar for real</h2>
+    <p class="lede">The SVG on this page is the concept. Use this prompt in Adobe Firefly, Midjourney, or Canva to generate the polished version. Generate 10, pick one, then reuse that image as the style reference so every version stays consistent.</p>
+
+    <div class="card mt">
+      <pre class="prompt" id="avatarPrompt">Cinematic portrait of a faceless hooded figure in a long matte-black tailored coat, face completely hidden in deep shadow under the hood, both gloved hands raised at shoulder height with palms open, a thin gold ring on one finger. Five luxury cologne bottles float in a perfect arc above the hands, suspended by glowing violet magnetic field lines. Warm gold light glows from the palms. Dark obsidian background, subtle smoke, gold and violet rim lighting, high contrast, premium fragrance-ad aesthetic, 4:5 composition, ultra detailed, photoreal.
+
+Avoid: visible face, eyes, helmets, capes, superhero costumes, logos or brand names on bottles, text.</pre>
+      <div class="copybar"><button class="copy" data-copy="avatarPrompt">Copy prompt</button></div>
+    </div>
+
+    <div class="grid g3 mt">
+      <div class="card"><h3>Gear (starter)</h3><ul class="clean"><li>Phone on tripod</li><li>1 key light + 1 RGB rim light</li><li>Lav or USB mic for VO</li><li>Black gloves, gold ring</li><li>Clear acrylic stand (fake the float)</li></ul></div>
+      <div class="card"><h3>Edit stack</h3><ul class="clean"><li>CapCut — save the open/outro as a template</li><li>Auto-captions in Inter Bold, gold highlight on key word</li><li>Bottle mark watermark, bottom right</li><li>Export 1080×1920</li></ul></div>
+      <div class="card"><h3>Track (monthly)</h3><ul class="clean"><li>Avg watch % by template</li><li>Which hook version won (A vs B)</li><li>Saves on IG, shares on TikTok</li><li>Top 3 comment requests → next month's reviews</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sig">Stay slick.</div>
+  Slick Scents · Content Playbook · v1
+</footer>
+
+<!-- Shared SVG defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d08a"/><stop offset=".55" stop-color="#d4a64a"/><stop offset="1" stop-color="#8a5a1e"/></linearGradient>
+    <symbol id="bottleMark" viewBox="0 0 62 86">
+      <rect x="20" y="0" width="22" height="16" rx="3" fill="#d4a64a"/>
+      <rect x="24" y="16" width="14" height="8" fill="#8a6a2a"/>
+      <rect x="2" y="24" width="58" height="60" rx="10" fill="none" stroke="#d4a64a" stroke-width="3"/>
+      <path d="M40 40c-3-4-15-4-16 2-1 7 15 5 15 13 0 7-13 7-17 2" fill="none" stroke="#f2eee6" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="bottleMarkDark" viewBox="0 0 62 86">
+      <rect x="20" y="0" width="22" height="16" rx="3" fill="#9a7428"/>
+      <rect x="24" y="16" width="14" height="8" fill="#6b5320"/>
+      <rect x="2" y="24" width="58" height="60" rx="10" fill="none" stroke="#9a7428" stroke-width="3"/>
+      <path d="M40 40c-3-4-15-4-16 2-1 7 15 5 15 13 0 7-13 7-17 2" fill="none" stroke="#141414" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<template id="avatarTpl">
+<svg class="avatar-svg" viewBox="0 0 400 460" role="img" aria-label="Slick Scents avatar: faceless hooded figure controlling floating cologne bottles">
+  <defs>
+    <radialGradient id="aGlow" cx="50%" cy="40%" r="55%"><stop offset="0" stop-color="#d4a64a" stop-opacity=".35"/><stop offset=".5" stop-color="#7b5cff" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <radialGradient id="aHand" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cf"/><stop offset=".35" stop-color="#d4a64a" stop-opacity=".9"/><stop offset="1" stop-color="#d4a64a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="aCoat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22222b"/><stop offset="1" stop-color="#0a0a0d"/></linearGradient>
+    <radialGradient id="aVoid" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#000"/><stop offset=".8" stop-color="#050507"/><stop offset="1" stop-color="#15151b"/></radialGradient>
+    <linearGradient id="aAmber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e59a52"/><stop offset="1" stop-color="#7a3e12"/></linearGradient>
+    <linearGradient id="aGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc9c"/><stop offset="1" stop-color="#a87a2a"/></linearGradient>
+    <linearGradient id="aSmoke" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a5a66"/><stop offset="1" stop-color="#1e1e26"/></linearGradient>
+    <linearGradient id="aViolet" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b3a2ff"/><stop offset="1" stop-color="#4a33b8"/></linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="200" fill="url(#aGlow)"/>
+
+  <!-- magnetic field lines: hands → bottles -->
+  <g fill="none" stroke-width="1.6" stroke-linecap="round">
+    <path class="field" d="M96 262 Q50 210 70 158" stroke="#7b5cff"/>
+    <path class="field" d="M100 258 Q100 170 135 112" stroke="#d4a64a"/>
+    <path class="field" d="M104 254 Q160 140 196 92" stroke="#7b5cff" opacity=".7"/>
+    <path class="field" d="M296 254 Q240 140 204 92" stroke="#7b5cff" opacity=".7"/>
+    <path class="field" d="M300 258 Q300 170 265 112" stroke="#d4a64a"/>
+    <path class="field" d="M304 262 Q350 210 330 158" stroke="#7b5cff"/>
+  </g>
+
+  <!-- bottles -->
+  <g class="float"><g transform="translate(56 128)"><rect x="7" y="0" width="14" height="9" rx="2" fill="#2b2b33"/><rect x="10" y="9" width="8" height="5" fill="#8a6a2a"/><rect x="0" y="14" width="28" height="36" rx="5" fill="url(#aSmoke)" stroke="#d4a64a" stroke-opacity=".4"/></g></g>
+  <g class="float d1"><g transform="translate(120 74)"><rect x="9" y="0" width="12" height="12" rx="6" fill="url(#aGold)"/><rect x="11" y="12" width="8" height="5" fill="#8a6a2a"/><ellipse cx="15" cy="38" rx="15" ry="21" fill="url(#aAmber)" stroke="#f1d08a" stroke-opacity=".5"/></g></g>
+  <g class="float d2"><g transform="translate(182 38)"><rect x="5" y="0" width="26" height="14" rx="2" fill="url(#aGold)"/><rect x="12" y="14" width="12" height="6" fill="#8a6a2a"/><rect x="0" y="20" width="36" height="46" rx="4" fill="url(#aGold)" opacity=".92"/><rect x="6" y="30" width="5" height="28" rx="2" fill="#fff" opacity=".35"/><path d="M24 34c-2-2-8-2-9 1-1 4 9 3 9 8 0 4-8 4-10 1" fill="none" stroke="#08080a" stroke-width="2.4" stroke-linecap="round"/></g></g>
+  <g class="float d3"><g transform="translate(250 74)"><rect x="8" y="0" width="14" height="10" rx="2" fill="#0d0d12"/><rect x="11" y="10" width="8" height="6" fill="#8a6a2a"/><path d="M2 16 h26 l4 40 h-34z" fill="url(#aViolet)" stroke="#b3a2ff" stroke-opacity=".5"/></g></g>
+  <g class="float d4"><g transform="translate(314 128)"><rect x="5" y="0" width="16" height="9" rx="4" fill="url(#aGold)"/><rect x="9" y="9" width="8" height="5" fill="#8a6a2a"/><rect x="0" y="14" width="26" height="38" rx="13" fill="#1b1b22" stroke="#d4a64a" stroke-opacity=".6"/><rect x="5" y="26" width="16" height="10" rx="2" fill="#d4a64a" opacity=".8"/></g></g>
+
+  <!-- sparkles -->
+  <g fill="#f1d08a">
+    <circle class="pulse" cx="160" cy="150" r="2"/><circle class="pulse" cx="240" cy="160" r="1.6" style="animation-delay:-1s"/>
+    <circle class="pulse" cx="90" cy="110" r="1.4" style="animation-delay:-.5s"/><circle class="pulse" cx="318" cy="104" r="1.8" style="animation-delay:-1.6s"/>
+    <circle class="pulse" cx="200" cy="130" r="1.4" style="animation-delay:-2s"/>
+  </g>
+
+  <!-- body / coat -->
+  <path d="M112 460 L128 340 Q140 300 200 292 Q260 300 272 340 L288 460 Z" fill="url(#aCoat)"/>
+  <path d="M200 300 L186 460 M200 300 L214 460" stroke="#000" stroke-opacity=".6" stroke-width="2"/>
+  <path d="M168 300 L200 360 L232 300" fill="none" stroke="#2e2e38" stroke-width="3"/>
+
+  <!-- arms -->
+  <path d="M150 322 Q112 300 100 262" fill="none" stroke="url(#aCoat)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M250 322 Q288 300 300 262" fill="none" stroke="url(#aCoat)" stroke-width="30" stroke-linecap="round"/>
+
+  <!-- hood -->
+  <path d="M200 168 C152 168 136 212 140 252 C143 290 166 310 200 312 C234 310 257 290 260 252 C264 212 248 168 200 168 Z" fill="url(#aCoat)"/>
+  <path d="M200 168 C176 172 160 196 158 226" fill="none" stroke="#3a3a46" stroke-width="2" opacity=".7"/>
+  <ellipse cx="200" cy="254" rx="34" ry="42" fill="url(#aVoid)"/>
+
+  <!-- hands (gloved) + glow -->
+  <circle class="pulse" cx="98" cy="252" r="30" fill="url(#aHand)"/>
+  <circle class="pulse" cx="302" cy="252" r="30" fill="url(#aHand)" style="animation-delay:-1.2s"/>
+  <g fill="#0b0b0e" stroke="#2b2b33" stroke-width="1">
+    <path d="M86 266 Q82 246 88 236 l2 14 2-20 4 18 3-20 3 19 4-15 2 20 q3 10-6 16z"/>
+    <path d="M314 266 Q318 246 312 236 l-2 14 -2-20 -4 18 -3-20 -3 19 -4-15 -2 20 q-3 10 6 16z"/>
+  </g>
+  <rect x="297" y="244" width="5" height="3" rx="1" fill="#d4a64a"/>
+</svg>
+</template>
+
+<script>
+// Mount avatar in multiple spots (unique gradient ids per instance)
+(function(){
+  const tpl=document.getElementById('avatarTpl').innerHTML;
+  ['heroAvatar','mainAvatar','miniAvatar'].forEach((id,i)=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.innerHTML=tpl.replace(/id="a(\w+)"/g,`id="a$1_${i}"`).replace(/url\(#a(\w+)\)/g,`url(#a$1_${i})`);
+    if(id==='miniAvatar'){const s=el.querySelector('svg');s.style.filter='none';s.setAttribute('viewBox','40 20 320 320');}
+  });
+})();
+
+// Script templates
+const F=s=>s.replace(/\[([^\]]+)\]/g,'<span class="fill">[$1]</span>');
+const scripts=[
+ {id:'verdict',name:'The 30-Second Verdict',len:'30–45 sec',plat:['TikTok','Reels','Shorts'],pillar:'The Verdict',
+  why:'Single-bottle review. Your bread and butter — 40% of content. Ends on a clear cop/wait/pass so people comment.',
+  hooks:['"[Fragrance] is the most overrated cologne under $[price]. Let me explain."','"If you only buy one cologne this [season], make it this one."'],
+  beats:[
+   ['0:00–0:02','Signature open','"Let\'s get slick."','Bottle rise → logo snap'],
+   ['0:02–0:05','Hook','[Hook A or B]','Text: "[FRAGRANCE] — WORTH IT?"'],
+   ['0:05–0:15','What it smells like','"Opens with [note]. Then it settles into [note]. Honestly? It smells like [real-life comparison]."','Spray mist slow-mo, cap close-up'],
+   ['0:15–0:25','The numbers','"On me it lasts [x] hours. Projection is [soft / moderate / loud] — [who will notice]."','Rating overlay: LONGEVITY / PROJECTION'],
+   ['0:25–0:32','Where to wear it','"This is a [office / date night / summer day] scent. Don\'t wear it to [wrong place]."','Text: "BEST FOR: ___"'],
+   ['0:32–0:40','Verdict','"Retail is $[price]. My call: [COP / WAIT / PASS]."','Gold stamp: COP / WAIT / PASS'],
+   ['0:40–0:45','Outro','"Cop, wait, or pass — tell me. Stay slick."','Bottle drops, avatar end card']
+  ]},
+ {id:'blind',name:'Blind Buy or Pass',len:'20–35 sec',plat:['TikTok','Shorts'],pillar:'The Money',
+  why:'Fast-paced, rapid-fire. Three bottles, one-line verdict each. Built for comments and "do this one next."',
+  hooks:['"Blind buy or pass — three colognes, ten seconds each."','"Don\'t blind buy any of these until you watch this."'],
+  beats:[
+   ['0:00–0:02','Signature open','"Let\'s get slick."','Three bottles rise together'],
+   ['0:02–0:04','Hook','[Hook A or B]','Text: "BLIND BUY OR PASS?"'],
+   ['0:04–0:13','Bottle 1','"[Fragrance 1]. Smells like [comparison]. Safe for anyone? [Yes / No]. Blind buy."','Bottle 1 floats forward, others dim'],
+   ['0:13–0:22','Bottle 2','"[Fragrance 2]. [Polarizing note] — you\'ll love it or hate it. Pass. Test it first."','Red "PASS" stamp'],
+   ['0:22–0:31','Bottle 3','"[Fragrance 3]. $[price] and it smells twice that. Blind buy all day."','Gold "BLIND BUY" stamp'],
+   ['0:31–0:35','Outro','"Drop three for the next round. Stay slick."','Text: "COMMENT YOUR 3"']
+  ]},
+ {id:'occasion',name:'Top 3 for the Occasion',len:'35–55 sec · or IG carousel',plat:['Reels','TikTok','Shorts','Carousel'],pillar:'The Occasion',
+  why:'High-save format. Swap the occasion every week: date night, office, wedding, summer cookout, first day of school, interview.',
+  hooks:['"Top 3 colognes for [occasion]. Number one isn\'t even close."','"Wear one of these to [occasion] and thank me later."'],
+  beats:[
+   ['0:00–0:02','Signature open','"Let\'s get slick."','Three bottles orbit'],
+   ['0:02–0:05','Hook','[Hook A or B]','Text: "TOP 3 FOR [OCCASION]"'],
+   ['0:05–0:17','#3','"Number three: [fragrance]. [Why it fits the occasion in one line]. [Price range]."','Bottle 3 + "#3" overlay'],
+   ['0:17–0:30','#2','"Number two: [fragrance]. [What makes it better than #3]."','Bottle 2 + "#2" overlay'],
+   ['0:30–0:45','#1','"Number one: [fragrance]. [The reason]. This is the one people ask about."','Slow-mo spray, gold glow, "#1"'],
+   ['0:45–0:50','Outro','"Save this for [occasion]. Which one you grabbing? Stay slick."','Text: "SAVE THIS 🔖"']
+  ]},
+ {id:'dupe',name:'Designer vs. Dupe',len:'30–45 sec',plat:['TikTok','Reels','Shorts'],pillar:'The Money',
+  why:'Money angle always performs. Side-by-side bottles, both hands controlling one each — perfect for the avatar visual.',
+  hooks:['"This $[dupe price] bottle smells like a $[designer price] cologne."','"Stop paying $[designer price] for [designer]. Here\'s the move."'],
+  beats:[
+   ['0:00–0:02','Signature open','"Let\'s get slick."','One bottle per hand, both rise'],
+   ['0:02–0:05','Hook','[Hook A or B]','Split screen: $[price] vs $[price]'],
+   ['0:05–0:15','The designer','"[Designer fragrance] — [what it\'s known for]. Retail $[price]."','Left bottle glows gold'],
+   ['0:15–0:27','The dupe','"[Dupe fragrance] — opening is [x]% there. Dry-down is [same / different] because [reason]."','Right bottle glows violet'],
+   ['0:27–0:37','The truth','"Longevity: [winner]. Compliments: [winner]. Difference in price: $[amount]."','Scoreboard overlay'],
+   ['0:37–0:45','Verdict + outro','"If you\'re [on a budget / a collector], get the [one]. Stay slick."','Winner floats up, loser drops']
+  ]},
+ {id:'culture',name:'Compliment Check / Hot Take',len:'25–45 sec',plat:['TikTok','Reels','Shorts'],pillar:'The Culture',
+  why:'Personality content — closest to your podcast energy. Opinions, real-world tests, what celebrities and athletes wear.',
+  hooks:['"I wore [fragrance] for a full week. Here\'s how many compliments I got."','"Unpopular opinion: [hot take about a fragrance or trend]."'],
+  beats:[
+   ['0:00–0:02','Signature open','"Let\'s get slick."','Bottle rise'],
+   ['0:02–0:05','Hook','[Hook A or B]','Text: "COMPLIMENT COUNT: ?" or "HOT TAKE 🔥"'],
+   ['0:05–0:20','The story / argument','"[Where you wore it / why you believe the take]. [One specific moment or reason]."','Hands + bottle, B-roll of setting (no faces)'],
+   ['0:20–0:32','The receipts','"Final count: [number]. Most came from [who/where]." OR "[Evidence for the take]."','Tally counter overlay'],
+   ['0:32–0:40','Open the floor','"Tell me I\'m wrong. Stay slick."','Text: "AGREE OR NAH?"']
+  ]},
+ {id:'rotation',name:'YouTube Long-Form: The Rotation',len:'8–12 min',plat:['YouTube'],pillar:'All pillars',
+  why:'Every two weeks. Stitch 3–5 of your Shorts topics into one deep video. Searchable title, chapters, avatar thumbnail.',
+  hooks:['"The only [5] colognes you need for [year] — a full rotation for every occasion."','"I tested [10] colognes under $[price] so you don\'t have to."'],
+  beats:[
+   ['0:00–0:05','Full signature open','"Let\'s get slick."','Full 5-sec avatar intro'],
+   ['0:05–0:45','Hook + promise','[Hook A or B] "By the end you\'ll know exactly what to buy and what to skip."','Preview flashes of every bottle'],
+   ['0:45–1:30','Ground rules','"How I rate: longevity, projection, versatility, price. [Your skin / climate note]."','Rating card graphic'],
+   ['1:30–9:00','Segments (1 per bottle)','Per bottle: smells like → numbers → where to wear → verdict. ~90 sec each.','Chapters in description'],
+   ['9:00–10:30','Final ranking','"If you only get one: [fragrance]. On a budget: [fragrance]. Skip: [fragrance]."','Tier list graphic'],
+   ['10:30–11:00','Outro','"Next video: [topic]. Subscribe so it finds you. Stay slick."','End screen: avatar + 2 videos']
+  ]}
+];
+const tabs=document.getElementById('tabs'),panels=document.getElementById('panels');
+scripts.forEach((s,i)=>{
+  const b=document.createElement('button');b.className='tab';b.role='tab';b.textContent=s.name;b.setAttribute('aria-selected',i===0);b.onclick=()=>show(i);tabs.appendChild(b);
+  const p=document.createElement('div');p.className='panel'+(i===0?' on':'');p.id='p-'+s.id;
+  p.innerHTML=`<div class="script-head"><div><h3 style="font-size:28px">${s.name}</h3><p>${s.why}</p></div><div>${s.plat.map(x=>`<span class="tag g">${x}</span>`).join('')}<span class="tag">${s.len}</span><span class="tag v">${s.pillar}</span></div></div>
+  <div class="hooks"><div class="hook"><b>HOOK · VERSION A</b><p>${F(s.hooks[0])}</p></div><div class="hook"><b>HOOK · VERSION B</b><p>${F(s.hooks[1])}</p></div></div>
+  <div class="tbl-wrap"><table class="beats"><thead><tr><th>Time</th><th>Beat</th><th>Voiceover</th><th>On screen / B-roll</th></tr></thead><tbody>${s.beats.map(r=>`<tr><td>${r[0]}</td><td><strong style="color:var(--text)">${r[1]}</strong></td><td class="vo">${F(r[2])}</td><td>${F(r[3])}</td></tr>`).join('')}</tbody></table></div>
+  <div class="copybar"><button class="copy" data-script="${i}">Copy script</button></div>`;
+  panels.appendChild(p);
+});
+function show(i){[...tabs.children].forEach((t,j)=>t.setAttribute('aria-selected',j===i));[...panels.children].forEach((p,j)=>p.classList.toggle('on',j===i));}
+function copyText(t,btn){const done=()=>{const o=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>btn.textContent=o,1400)};
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(done).catch(()=>fallback(t,done))}else fallback(t,done)}
+function fallback(t,done){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.copy');if(!b)return;
+  if(b.dataset.copy){copyText(document.getElementById(b.dataset.copy).textContent,b);return}
+  const s=scripts[+b.dataset.script];
+  const txt=`SLICK SCENTS — ${s.name.toUpperCase()} (${s.len})\nPlatforms: ${s.plat.join(', ')}\n\nHOOK A: ${s.hooks[0]}\nHOOK B: ${s.hooks[1]}\n\n`+s.beats.map(r=>`[${r[0]}] ${r[1].toUpperCase()}\nVO: ${r[2]}\nSCREEN: ${r[3]}`).join('\n\n')+`\n\nStay slick.`;
+  copyText(txt,b);
+});
+</script>
+</body>
+</html>
