@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>ΑΦΑ Study Room</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single study column, sticky tab bar; old gold on ink, reading-first */
+:root{
+  --bg:#f4f3ef; --surface:#ffffff; --ink:#15130e; --muted:#5d584c; --line:#dcd7ca;
+  --gold:#8a6510; --gold-soft:#f1e6c6; --on-gold:#ffffff; --good:#2f7a4a; --bad:#a3392f;
+  --f-display:'Cinzel','Trajan Pro',Georgia,serif;
+  --f-body:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f0e0b; --surface:#1a1813; --ink:#f1ebdc; --muted:#b0a891; --line:#2f2b22;
+  --gold:#d8ad3c; --gold-soft:#2c2412; --on-gold:#15130e; --good:#5fbf80; --bad:#e2766b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f0e0b; --surface:#1a1813; --ink:#f1ebdc; --muted:#b0a891; --line:#2f2b22;
+  --gold:#d8ad3c; --gold-soft:#2c2412; --on-gold:#15130e; --good:#5fbf80; --bad:#e2766b; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:1.65rem;letter-spacing:.04em}
+h2{font-size:1.3rem;letter-spacing:.03em}
+h3{font-size:1.02rem;letter-spacing:.02em}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--ink)}
+.letters{font-family:var(--f-display);font-weight:700;font-size:2.4rem;line-height:1;color:var(--gold);letter-spacing:.06em}
+.meter{flex:1 1 220px;min-width:0}
+.meter-bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.meter-bar i{display:block;height:100%;background:var(--gold);width:0;transition:width .4s}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;padding-block:10px;margin-bottom:18px;border-bottom:1px solid var(--line);overflow-x:auto}
+nav.tabs a{flex:1 0 auto;text-align:center;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem;padding:8px 12px;border-radius:8px}
+nav.tabs a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+nav.tabs a:focus-visible,button:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.tile b{display:block;font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile span{font-size:.8rem;color:var(--muted)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.plan{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.plan li:first-child{padding-top:0}
+.plan li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.plan li:last-child{border-bottom:0}
+.plan .min{font-family:var(--f-mono);font-size:.8rem;color:var(--gold)}
+.plan li>div{min-width:0}
+.plan li.done strong{text-decoration:line-through;color:var(--muted)}
+
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 14px;font-weight:600}
+button.primary{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+button.ghost{background:transparent}
+button:disabled{opacity:.45;cursor:default}
+.chip{padding:6px 12px;border-radius:99px;font-size:.85rem;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.mod summary{list-style:none;cursor:pointer;padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+details.mod summary::-webkit-details-marker{display:none}
+details.mod .body{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px}
+.badge{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.read{background:var(--gold-soft);color:var(--gold);border-color:var(--gold)}
+ul.facts{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+ul.facts b{color:var(--ink)}
+
+.jewels{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.jewel{border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.jewel .ini{font-family:var(--f-display);font-weight:700;color:var(--gold);font-size:1.15rem}
+.jewel small{color:var(--muted);font-size:.86rem;line-height:1.4}
+.mnemonic{border-left:3px solid var(--gold);padding:8px 12px;background:var(--gold-soft);border-radius:0 8px 8px 0;font-size:.95rem}
+
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--gold);margin-left:6px}
+.tl li{position:relative;padding:0 0 14px 18px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.tl .yr{font-family:var(--f-mono);font-size:.82rem;color:var(--gold);display:block}
+
+.flash{min-height:250px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:var(--r);padding:20px}
+.flash .q{font-size:1.25rem;font-weight:600;line-height:1.4}
+.flash .a{font-family:var(--f-display);font-size:1.3rem;color:var(--gold);font-weight:700}
+.flash .note{font-size:.93rem;color:var(--muted)}
+.count{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grade button{padding:14px}
+.grade .again{border-color:var(--bad);color:var(--bad)}
+.grade .got{border-color:var(--good);color:var(--good)}
+
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{text-align:left;font-weight:500;padding:13px 14px}
+.opts button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--surface))}
+.opts button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--surface))}
+
+textarea{width:100%;min-height:84px;font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two>div{min-width:0}
+.do li::marker{content:"✓  ";color:var(--good)}
+.dont li::marker{content:"✕  ";color:var(--bad)}
+a{color:var(--gold)}
+.foot{margin-top:28px;font-size:.82rem;color:var(--muted)}
+@media (max-width:560px){.two{grid-template-columns:1fr}.plan li{grid-template-columns:40px 1fr}.plan li button{grid-column:2;justify-self:start}h1{font-size:1.4rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="stack" style="gap:4px">
+      <div class="letters" aria-hidden="true">ΑΦΑ</div>
+      <h1>Study Room</h1>
+      <p class="muted" style="font-size:.95rem">Public history of Alpha Phi Alpha Fraternity, Inc., in 10-minute sessions.</p>
+    </div>
+    <div class="meter">
+      <div class="row" style="justify-content:space-between"><span class="eyebrow">Mastery</span><span class="count" id="masteryText">0 / 0</span></div>
+      <div class="meter-bar"><i id="masteryBar"></i></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#today">Today</a><a href="#learn">Learn</a><a href="#cards">Cards</a><a href="#quiz">Quiz</a><a href="#prep">Prep</a>
+  </nav>
+
+  <main id="view"></main>
+
+  <p class="foot">Built from public sources only: the fraternity's official site and published histories. Ritual, intake specifics, and the private meaning of the letters are not public and are not here. Confirm details with apa1906.net and the brothers of your local chapter.</p>
+</div>
+
+<script>
+/* ---------- CONTENT ---------- */
+const MODULES = [
+ {id:'origins', title:'Origins at Cornell', mins:3,
+  sum:'How a study circle of Black students in Ithaca became the first intercollegiate Greek-letter fraternity for African American men.',
+  facts:[
+   '<b>1905:</b> Black students at Cornell University, facing isolation and racism on campus, formed a literary and social study club for support and fellowship.',
+   '<b>December 4, 1906:</b> The group organized as Alpha Phi Alpha at Cornell University in Ithaca, New York. December 4 is Founders’ Day.',
+   'Alpha was the <b>first intercollegiate Greek-letter fraternity established for African American men</b>.',
+   '<b>Alpha chapter</b> is at Cornell. <b>Beta</b> (Howard University) and <b>Gamma</b> (Virginia Union University) followed in 1907, making Alpha an intercollegiate organization.',
+   '<b>1908:</b> The fraternity was incorporated (April 3, 1908) and held its first General Convention.',
+   'The seven founders are called the <b>Seven Jewels</b>.'
+  ]},
+ {id:'jewels', title:'The Seven Jewels', mins:4,
+  sum:'Know every name and one thing each man did. Expect this question first in any conversation with brothers.'},
+ {id:'identity', title:'Motto, Aims & Symbols', mins:2,
+  sum:'The public identity of the fraternity: what Alpha stands for and how it presents itself.',
+  facts:[
+   '<b>Motto:</b> “First of All, Servants of All, We Shall Transcend All.”',
+   '<b>Aims:</b> Manly Deeds, Scholarship, and Love for All Mankind.',
+   '<b>Colors:</b> Old Gold and Black.',
+   '<b>Flower:</b> Yellow Rose.',
+   '<b>Symbol:</b> The Sphinx. The official magazine, <i>The Sphinx</i>, has been published since 1914.',
+   '<b>Hymn:</b> The fraternity hymn’s words were written by Brother Charles H. Wesley, historian and former General President.',
+   '<b>World Headquarters:</b> Baltimore, Maryland.',
+   'Alpha is the oldest of the nine historically Black Greek-letter organizations in the <b>National Pan-Hellenic Council (NPHC)</b>, known as the Divine Nine. The NPHC itself was founded at Howard University in 1930.'
+  ]},
+ {id:'programs', title:'National Programs', mins:3,
+  sum:'Service is the center of Alpha. These programs are what chapters actually run, and what you would be joining to do.',
+  facts:[
+   '<b>Go-to-High-School, Go-to-College (1922):</b> The fraternity’s longest-running program, urging young people to finish school and pursue college.',
+   '<b>A Voteless People Is a Hopeless People (1930s):</b> Voter education and registration, still active every election cycle.',
+   '<b>Project Alpha (1980):</b> Developed with the March of Dimes to educate young men about responsibility, healthy relationships, and teen pregnancy prevention.',
+   '<b>Brother’s Keeper:</b> Chapters support elderly or disabled brothers and widows of brothers.',
+   '<b>Big Brothers Big Sisters of America:</b> A national mentoring partnership.',
+   '<b>Martin Luther King Jr. Memorial:</b> Alpha brothers proposed a national memorial to Brother King in 1984, Congress authorized it in 1996, and the fraternity led the foundation that built it. It was dedicated on the National Mall on October 16, 2011.'
+  ]},
+ {id:'brothers', title:'Notable Brothers', mins:3,
+  sum:'Leaders in law, civil rights, scholarship, sports, media, and music.',
+  facts:[
+   '<b>Martin Luther King Jr.:</b> Initiated in 1952 through Sigma chapter at Boston University.',
+   '<b>Thurgood Marshall:</b> First African American Supreme Court Justice; initiated at Lincoln University (Pennsylvania).',
+   '<b>W.E.B. Du Bois:</b> Scholar and NAACP co-founder; honorary member.',
+   '<b>Jesse Owens:</b> Four gold medals at the 1936 Berlin Olympics; Ohio State University.',
+   '<b>Frederick D. Patterson:</b> President of Tuskegee and founder of the United Negro College Fund (1944).',
+   '<b>Charles H. Wesley:</b> Historian, General President, and author of the fraternity’s official history.',
+   '<b>Adam Clayton Powell Jr.:</b> Pastor and congressman from Harlem.',
+   '<b>Andrew Young:</b> Civil rights leader, U.N. Ambassador, and Mayor of Atlanta.',
+   '<b>Paul Robeson:</b> Actor, singer, activist, and Rutgers All-American.',
+   '<b>Duke Ellington:</b> Composer and bandleader; honorary member.',
+   '<b>John H. Johnson:</b> Founder of <i>Ebony</i> and <i>Jet</i>.',
+   '<b>Lionel Richie:</b> Singer and songwriter; Tuskegee University.',
+   '<b>Stuart Scott:</b> ESPN anchor; University of North Carolina.'
+  ]},
+ {id:'structure', title:'How Alpha Works Today', mins:2,
+  sum:'Where you fit as a working professional, and how membership works now.',
+  facts:[
+   'Alpha has <b>college chapters</b> and <b>alumni chapters</b> across the United States, the Caribbean, Europe, Africa, and Asia.',
+   'Chapters are grouped into <b>five regions</b>: Eastern, Southern, Midwestern, Southwestern, and Western. New York is in the <b>Eastern Region</b>.',
+   'Alumni chapter names end in <b>Lambda</b>. That is your path: membership through an alumni chapter as a college graduate.',
+   'In 1990 the NPHC organizations abolished pledging. Alpha now uses a <b>Membership Intake Process (MIP)</b>.',
+   '<b>Hazing is prohibited.</b> Anyone offering an unofficial or underground path is a red flag. Walk away.',
+   'Official information lives at <b>apa1906.net</b>. Requirements and intake timing are set nationally and through each chapter.'
+  ]},
+ {id:'timeline', title:'Timeline', mins:2, sum:'The order of events. Read top to bottom once a week.'}
+];
+
+const JEWELS = [
+ {n:'Henry Arthur Callis', i:'HAC', h:'Physician and medical educator; taught at Howard University’s College of Medicine. The last surviving Jewel (died 1974).'},
+ {n:'Charles Henry Chapman', i:'CHC', h:'Agricultural educator; taught at Florida A&M. The first Jewel to pass (1934).'},
+ {n:'Eugene Kinckle Jones', i:'EKJ', h:'Helped found Beta and Gamma chapters. Led the National Urban League as executive secretary; served in FDR’s “Black Cabinet.”'},
+ {n:'George Biddle Kelley', i:'GBK', h:'Civil engineer; the first African American registered as an engineer in New York State. Worked on the State Barge Canal.'},
+ {n:'Nathaniel Allison Murray', i:'NAM', h:'Educator; spent his career teaching in the public schools of Washington, D.C.'},
+ {n:'Robert Harold Ogle', i:'RHO', h:'Built his career on the staff of the United States Senate in Washington, D.C.'},
+ {n:'Vertner Woodson Tandy', i:'VWT', h:'First African American registered architect in New York State. Designed Villa Lewaro for Madam C.J. Walker and St. Philip’s Episcopal Church in Harlem. Designed the fraternity pin.'}
+];
+
+const TIMELINE = [
+ ['1905','Black students at Cornell form a literary and social study club.'],
+ ['Dec 4, 1906','Alpha Phi Alpha founded at Cornell University, Ithaca, NY.'],
+ ['1907','Beta (Howard) and Gamma (Virginia Union) chapters established.'],
+ ['1908','Incorporated April 3; first General Convention held.'],
+ ['1914','First issue of The Sphinx.'],
+ ['1922','Go-to-High-School, Go-to-College launches.'],
+ ['1930','National Pan-Hellenic Council founded at Howard University.'],
+ ['1930s','A Voteless People Is a Hopeless People begins.'],
+ ['1934','Jewel Charles H. Chapman passes, the first Jewel to do so.'],
+ ['1952','Martin Luther King Jr. initiated at Boston University.'],
+ ['1974','Jewel Henry A. Callis, the last surviving Jewel, passes.'],
+ ['1980','Project Alpha launches with the March of Dimes.'],
+ ['1984','Alpha brothers propose a national memorial to Dr. King.'],
+ ['1990','Pledging abolished; Membership Intake Process adopted.'],
+ ['1996','Congress authorizes the MLK Memorial.'],
+ ['2006','Centennial of the fraternity.'],
+ ['Oct 16, 2011','Martin Luther King Jr. Memorial dedicated in Washington, D.C.']
+];
+
+/* g = distractor group; d = custom distractors; mc:false = flashcard only */
+const CARDS = [
+ // origins
+ {m:'origins',q:'Where was Alpha Phi Alpha founded?',a:'Cornell University, Ithaca, NY',g:'place'},
+ {m:'origins',q:'What is the founding date?',a:'December 4, 1906',g:'date'},
+ {m:'origins',q:'Alpha was the first intercollegiate Greek-letter fraternity established for whom?',a:'African American men',d:['Black college women','First-generation students','Graduate students of all races']},
+ {m:'origins',q:'What did Alpha begin as in 1905?',a:'A literary and social study club',d:['A debate team','A church youth group','An athletic club']},
+ {m:'origins',q:'Where was Beta chapter established?',a:'Howard University',g:'place'},
+ {m:'origins',q:'Where was Gamma chapter established?',a:'Virginia Union University',g:'place'},
+ {m:'origins',q:'In what year did Beta and Gamma chapters form?',a:'1907',g:'year'},
+ {m:'origins',q:'When was the fraternity incorporated?',a:'April 3, 1908',g:'date'},
+ {m:'origins',q:'What are the founders called?',a:'The Seven Jewels',d:['The Seven Pillars','The Founding Fathers','The Cornell Seven']},
+ // jewels
+ {m:'jewels',q:'Name all Seven Jewels.',a:'Callis, Chapman, Jones, Kelley, Murray, Ogle, Tandy',note:'Mnemonic: Can Charles Join Kelley’s Music Orchestra Tonight?',mc:false},
+ {m:'jewels',q:'Which Jewel was the first African American registered architect in New York State?',a:'Vertner Woodson Tandy',g:'jewel'},
+ {m:'jewels',q:'Which Jewel designed Villa Lewaro for Madam C.J. Walker?',a:'Vertner Woodson Tandy',g:'jewel'},
+ {m:'jewels',q:'Which Jewel designed the fraternity pin?',a:'Vertner Woodson Tandy',g:'jewel'},
+ {m:'jewels',q:'Which Jewel was the first African American registered engineer in New York State?',a:'George Biddle Kelley',g:'jewel'},
+ {m:'jewels',q:'Which Jewel led the National Urban League?',a:'Eugene Kinckle Jones',g:'jewel'},
+ {m:'jewels',q:'Which Jewel helped found Beta and Gamma chapters?',a:'Eugene Kinckle Jones',g:'jewel'},
+ {m:'jewels',q:'Which Jewel was a physician and the last surviving Jewel?',a:'Henry Arthur Callis',g:'jewel'},
+ {m:'jewels',q:'Which Jewel was an agricultural educator and the first to pass?',a:'Charles Henry Chapman',g:'jewel'},
+ {m:'jewels',q:'Which Jewel built his career on the U.S. Senate staff?',a:'Robert Harold Ogle',g:'jewel'},
+ {m:'jewels',q:'Which Jewel taught in the Washington, D.C. public schools?',a:'Nathaniel Allison Murray',g:'jewel'},
+ {m:'jewels',q:'In what year did Jewel Callis, the last surviving Jewel, pass?',a:'1974',g:'year'},
+ // identity
+ {m:'identity',q:'What is the motto?',a:'First of All, Servants of All, We Shall Transcend All',d:['Service Above Self, Brotherhood Above All','Lifting As We Climb','Achievement in Every Field of Human Endeavor']},
+ {m:'identity',q:'What are the three aims?',a:'Manly Deeds, Scholarship, and Love for All Mankind',d:['Brotherhood, Scholarship, and Service','Manhood, Perseverance, and Uplift','Faith, Family, and Fellowship']},
+ {m:'identity',q:'What are the colors?',a:'Old Gold and Black',d:['Crimson and Cream','Royal Blue and White','Royal Purple and Old Gold']},
+ {m:'identity',q:'What is the flower?',a:'Yellow Rose',d:['Red Rose','White Rose','Tea Rose']},
+ {m:'identity',q:'What is the fraternity’s symbol, and the name of its magazine?',a:'The Sphinx',d:['The Pyramid','The Eagle','The Lion']},
+ {m:'identity',q:'When was The Sphinx first published?',a:'1914',g:'year'},
+ {m:'identity',q:'Who wrote the words of the fraternity hymn?',a:'Charles H. Wesley',g:'brother'},
+ {m:'identity',q:'Where is World Headquarters?',a:'Baltimore, Maryland',g:'place'},
+ {m:'identity',q:'Which council includes Alpha and the rest of the Divine Nine?',a:'National Pan-Hellenic Council (NPHC)',d:['North American Interfraternity Conference','National Panhellenic Conference','United Negro College Fund']},
+ {m:'identity',q:'In what year was the NPHC founded?',a:'1930',g:'year'},
+ // programs
+ {m:'programs',q:'Which program, launched in 1922, urges students to finish school and go to college?',a:'Go-to-High-School, Go-to-College',g:'program'},
+ {m:'programs',q:'Which program focuses on voter education and registration?',a:'A Voteless People Is a Hopeless People',g:'program'},
+ {m:'programs',q:'Which program was built with the March of Dimes to educate young men?',a:'Project Alpha',g:'program'},
+ {m:'programs',q:'Which program supports elderly brothers and widows of brothers?',a:'Brother’s Keeper',g:'program'},
+ {m:'programs',q:'Which organization is Alpha’s national mentoring partner?',a:'Big Brothers Big Sisters of America',g:'program'},
+ {m:'programs',q:'In what year did Go-to-High-School, Go-to-College launch?',a:'1922',g:'year'},
+ {m:'programs',q:'In what year did Project Alpha launch?',a:'1980',g:'year'},
+ {m:'programs',q:'When was the Martin Luther King Jr. Memorial dedicated?',a:'October 16, 2011',g:'date'},
+ {m:'programs',q:'In what year did Congress authorize the MLK Memorial?',a:'1996',g:'year'},
+ // brothers
+ {m:'brothers',q:'Which brother was the first African American Supreme Court Justice?',a:'Thurgood Marshall',g:'brother'},
+ {m:'brothers',q:'Which brother was initiated at Boston University in 1952?',a:'Martin Luther King Jr.',g:'brother'},
+ {m:'brothers',q:'Which brother won four gold medals at the 1936 Olympics?',a:'Jesse Owens',g:'brother'},
+ {m:'brothers',q:'Which brother founded the United Negro College Fund?',a:'Frederick D. Patterson',g:'brother'},
+ {m:'brothers',q:'Which brother wrote the fraternity’s official history and served as General President?',a:'Charles H. Wesley',g:'brother'},
+ {m:'brothers',q:'Which NAACP co-founder is an honorary member?',a:'W.E.B. Du Bois',g:'brother'},
+ {m:'brothers',q:'Which brother was a Harlem pastor and congressman?',a:'Adam Clayton Powell Jr.',g:'brother'},
+ {m:'brothers',q:'Which brother served as U.N. Ambassador and Mayor of Atlanta?',a:'Andrew Young',g:'brother'},
+ {m:'brothers',q:'Which brother founded Ebony and Jet?',a:'John H. Johnson',g:'brother'},
+ {m:'brothers',q:'Which brother was an ESPN anchor from UNC?',a:'Stuart Scott',g:'brother'},
+ {m:'brothers',q:'Which brother was an actor, singer, activist, and Rutgers All-American?',a:'Paul Robeson',g:'brother'},
+ {m:'brothers',q:'Which composer and bandleader is an honorary member?',a:'Duke Ellington',g:'brother'},
+ {m:'brothers',q:'Where was Thurgood Marshall initiated?',a:'Lincoln University (Pennsylvania)',g:'place'},
+ // structure
+ {m:'structure',q:'Alumni chapter names end in which Greek letter?',a:'Lambda',d:['Omega','Sigma','Delta']},
+ {m:'structure',q:'How many regions does Alpha have?',a:'Five',d:['Three','Seven','Nine']},
+ {m:'structure',q:'Which region includes New York?',a:'Eastern Region',d:['Southern Region','Midwestern Region','Northern Region']},
+ {m:'structure',q:'What is today’s official path to membership called?',a:'Membership Intake Process (MIP)',d:['Line Process','Probate Program','Pledge Period']},
+ {m:'structure',q:'In what year did NPHC organizations abolish pledging?',a:'1990',g:'year'},
+ {m:'structure',q:'As a working college graduate, which kind of chapter is your path?',a:'An alumni chapter',d:['A college chapter','Any chapter in the region','A national at-large program']},
+ {m:'structure',q:'What is the official website?',a:'apa1906.net',mc:false}
+].map((c,i)=>({...c,id:'c'+i}));
+
+const PREP_Q = [
+ {id:'why',q:'Why Alpha, and why now? Say it in two sentences you would actually say out loud.'},
+ {id:'aim',q:'Which aim (Manly Deeds, Scholarship, Love for All Mankind) already shows up in your life? Give one real example.'},
+ {id:'serve',q:'Which national program would you work on first? Go-to-High-School, Go-to-College lines up with your AP work; Brother’s Keeper and voter work line up with GUS.'},
+ {id:'record',q:'What service record can a chapter verify? List dates, organizations, and who can speak to it.'},
+ {id:'chapter',q:'Which alumni chapters serve Queens and Long Island? Who do you already know that is a brother?'},
+ {id:'daughter',q:'What do you want your daughter to see from this commitment?'}
+];
+
+/* ---------- STATE ---------- */
+const KEY='apa-study-v1';
+const DAY=86400000, INTERVALS=[0,1,2,4,8,16];
+let S={cards:{},read:{},streak:{n:0,last:''},notes:{},doneToday:{}};
+try{const raw=localStorage.getItem(KEY); if(raw) S={...S,...JSON.parse(raw)};}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const today=()=>new Date().toISOString().slice(0,10);
+function cs(id){return S.cards[id]||{box:0,due:0};}
+function isDue(c){return cs(c.id).due<=Date.now();}
+function mastered(){return CARDS.filter(c=>cs(c.id).box>=4).length;}
+function grade(c,ok){
+  const st=cs(c.id); const box=ok?Math.min(5,st.box+1):1;
+  S.cards[c.id]={box,due:Date.now()+INTERVALS[box]*DAY-3600000};
+  touchStreak(); save(); renderMeter();
+}
+function touchStreak(){
+  const t=today(); if(S.streak.last===t) return;
+  const y=new Date(Date.now()-DAY).toISOString().slice(0,10);
+  S.streak={n:S.streak.last===y?S.streak.n+1:1,last:t};
+}
+function doneStep(k){ if(!S.doneToday||S.doneToday.d!==today()) S.doneToday={d:today()}; S.doneToday[k]=true; save(); }
+function stepDone(k){return S.doneToday&&S.doneToday.d===today()&&S.doneToday[k];}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+
+function renderMeter(){
+  const m=mastered(); document.getElementById('masteryText').textContent=m+' / '+CARDS.length+' cards';
+  document.getElementById('masteryBar').style.width=(m/CARDS.length*100)+'%';
+}
+
+/* ---------- VIEWS ---------- */
+const V=document.getElementById('view');
+let deckFilter='due';
+
+function viewToday(){
+  const due=CARDS.filter(isDue).length;
+  const next=MODULES.find(m=>!S.read[m.id])||MODULES[0];
+  const streakNow=(S.streak.last===today()||S.streak.last===new Date(Date.now()-DAY).toISOString().slice(0,10))?S.streak.n:0;
+  V.innerHTML=`<div class="stack">
+   <div><p class="eyebrow">${new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</p>
+   <h2 style="margin-top:4px">Today’s 10 minutes</h2></div>
+   <div class="tiles">
+    <div class="tile"><b>${due}</b><span>Cards due</span></div>
+    <div class="tile"><b>${mastered()}</b><span>Mastered</span></div>
+    <div class="tile"><b>${streakNow}</b><span>Day streak</span></div>
+   </div>
+   <div class="panel"><ol class="plan">
+    <li class="${stepDone('read')?'done':''}"><span class="min">3 min</span><div><strong>Read: ${esc(next.title)}</strong><p class="muted" style="font-size:.9rem">${esc(next.sum)}</p></div><button data-go="read" data-mod="${next.id}">Open</button></li>
+    <li class="${stepDone('cards')?'done':''}"><span class="min">4 min</span><div><strong>Review ${Math.min(due,15)||'15'} flashcards</strong><p class="muted" style="font-size:.9rem">${due?'Cards you are due to see again.':'Nothing due. Run a mixed set to stay sharp.'}</p></div><button class="primary" data-go="cards">Start</button></li>
+    <li class="${stepDone('quiz')?'done':''}"><span class="min">3 min</span><div><strong>Quiz: 5 questions</strong><p class="muted" style="font-size:.9rem">Misses go back into tomorrow’s cards.</p></div><button data-go="quiz">Quiz me</button></li>
+   </ol></div>
+   <div class="mnemonic"><b>Jewels mnemonic:</b> <i>Can Charles Join Kelley’s Music Orchestra Tonight?</i> Callis, Chapman, Jones, Kelley, Murray, Ogle, Tandy.</div>
+  </div>`;
+  V.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
+    const g=b.dataset.go;
+    if(g==='read'){openMod=b.dataset.mod; location.hash='learn';}
+    if(g==='cards'){deckFilter=due?'due':'all'; deckSize=15; location.hash='cards';}
+    if(g==='quiz'){quizLen=5; location.hash='quiz';}
+  });
+}
+
+let openMod=null;
+function modBody(m){
+  if(m.id==='jewels') return `<div class="mnemonic"><i>Can Charles Join Kelley’s Music Orchestra Tonight?</i></div>
+   <div class="jewels">${JEWELS.map(j=>`<div class="jewel"><span class="ini">${j.i}</span><strong>${j.n}</strong><small>${j.h}</small></div>`).join('')}</div>`;
+  if(m.id==='timeline') return `<ul class="tl">${TIMELINE.map(t=>`<li><span class="yr">${t[0]}</span>${t[1]}</li>`).join('')}</ul>`;
+  return `<ul class="facts">${m.facts.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+}
+function viewLearn(){
+  V.innerHTML=`<div class="stack"><div><p class="eyebrow">${Object.keys(S.read).length} of ${MODULES.length} read</p><h2 style="margin-top:4px">Modules</h2></div>
+  ${MODULES.map(m=>`<details class="mod" id="mod-${m.id}" ${openMod===m.id?'open':''}>
+    <summary><div><h3>${m.title}</h3><p class="muted" style="font-size:.9rem;margin-top:2px">${m.sum}</p></div>
+    <span class="badge ${S.read[m.id]?'read':''}">${S.read[m.id]?'Read':m.mins+' min'}</span></summary>
+    <div class="body">${modBody(m)}
+     <div class="row"><button class="primary" data-read="${m.id}">${S.read[m.id]?'Marked as read':'Mark as read'}</button>
+     ${CARDS.some(c=>c.m===m.id)?`<button class="ghost" data-drill="${m.id}">Drill these cards</button>`:''}</div>
+    </div></details>`).join('')}</div>`;
+  V.querySelectorAll('[data-read]').forEach(b=>b.onclick=()=>{S.read[b.dataset.read]=true; doneStep('read'); touchStreak(); save(); openMod=b.dataset.read; viewLearn();});
+  V.querySelectorAll('[data-drill]').forEach(b=>b.onclick=()=>{deckFilter=b.dataset.drill; deckSize=99; location.hash='cards';});
+  if(openMod){const el=document.getElementById('mod-'+openMod); if(el) el.scrollIntoView({block:'start'}); openMod=null;}
+}
+
+let deck=[],di=0,deckSize=15,shown=false,tally={ok:0,miss:0};
+function buildDeck(){
+  let pool = deckFilter==='due'?CARDS.filter(isDue): deckFilter==='all'?CARDS: CARDS.filter(c=>c.m===deckFilter);
+  if(!pool.length) pool=CARDS;
+  pool=shuffle(pool).sort((a,b)=>cs(a.id).box-cs(b.id).box);
+  deck=pool.slice(0,deckSize); di=0; shown=false; tally={ok:0,miss:0};
+}
+function viewCards(){ buildDeck(); drawCards(); }
+function drawCards(){
+  const chips=[['due','Due'],['all','All'],['origins','Origins'],['jewels','Jewels'],['identity','Symbols'],['programs','Programs'],['brothers','Brothers'],['structure','Today']];
+  const head=`<div class="row" role="group" aria-label="Deck">${chips.map(([k,l])=>`<button class="chip" aria-pressed="${deckFilter===k}" data-f="${k}">${l}</button>`).join('')}</div>`;
+  if(di>=deck.length){
+    doneStep('cards');
+    V.innerHTML=`<div class="stack">${head}<div class="flash"><div><p class="eyebrow">Set complete</p><p class="q" style="margin-top:8px">${tally.ok} got it · ${tally.miss} to repeat</p><p class="note" style="margin-top:6px">Cards you missed come back tomorrow. Cards you knew space out to 2, 4, 8, then 16 days.</p></div>
+    <div class="row"><button class="primary" id="again">Run another set</button><button class="ghost" onclick="location.hash='quiz'">Take the quiz</button></div></div></div>`;
+    document.getElementById('again').onclick=()=>{deckFilter='all';buildDeck();drawCards();};
+  } else {
+    const c=deck[di]; const mod=MODULES.find(m=>m.id===c.m);
+    V.innerHTML=`<div class="stack">${head}<div class="flash">
+      <div class="row" style="justify-content:space-between"><span class="eyebrow">${mod.title}</span><span class="count">${di+1} / ${deck.length}</span></div>
+      <p class="q">${esc(c.q)}</p>
+      <div ${shown?'':'hidden'} id="ans"><p class="a">${esc(c.a)}</p>${c.note?`<p class="note" style="margin-top:6px">${esc(c.note)}</p>`:''}</div>
+      ${shown?`<div class="grade"><button class="again" id="miss">Again</button><button class="got" id="ok">Got it</button></div>`:`<button class="primary" id="show" style="padding:14px">Show answer</button>`}
+    </div><p class="muted" style="font-size:.85rem">Say the answer out loud before you tap. Keys: space to flip, 1 again, 2 got it.</p></div>`;
+    if(!shown) document.getElementById('show').onclick=()=>{shown=true;drawCards();};
+    else{
+      document.getElementById('miss').onclick=()=>{grade(c,false);tally.miss++;di++;shown=false;drawCards();};
+      document.getElementById('ok').onclick=()=>{grade(c,true);tally.ok++;di++;shown=false;drawCards();};
+    }
+  }
+  V.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{deckFilter=b.dataset.f; deckSize=deckFilter==='due'||deckFilter==='all'?15:99; buildDeck(); drawCards();});
+}
+document.addEventListener('keydown',e=>{
+  if(route()!=='cards'||e.target.tagName==='TEXTAREA'||di>=deck.length) return;
+  if(e.key===' '&&!shown){e.preventDefault();document.getElementById('show')?.click();}
+  else if(shown&&e.key==='1') document.getElementById('miss')?.click();
+  else if(shown&&e.key==='2') document.getElementById('ok')?.click();
+});
+
+let quiz=[],qi=0,qscore=0,qmiss=[],quizLen=10,answered=false;
+function options(c){
+  let d=c.d? c.d.slice(): shuffle([...new Set(CARDS.filter(x=>x.g===c.g&&x.a!==c.a).map(x=>x.a))]).slice(0,3);
+  return shuffle([c.a,...d.slice(0,3)]);
+}
+function viewQuiz(){
+  const pool=shuffle(CARDS.filter(c=>c.mc!==false)).sort((a,b)=>cs(a.id).box-cs(b.id).box+(Math.random()-.5)*2);
+  quiz=pool.slice(0,quizLen).map(c=>({c,opts:options(c)})); qi=0; qscore=0; qmiss=[]; answered=false; drawQuiz();
+}
+function drawQuiz(){
+  if(qi>=quiz.length){
+    doneStep('quiz'); touchStreak(); save();
+    V.innerHTML=`<div class="stack"><div class="flash"><div><p class="eyebrow">Quiz complete</p><p class="a" style="margin-top:8px;font-size:2rem">${qscore} / ${quiz.length}</p></div>
+     ${qmiss.length?`<div><p class="eyebrow" style="color:var(--bad)">Review these</p><ul class="facts" style="margin-top:8px">${qmiss.map(c=>`<li>${esc(c.q)} <b>${esc(c.a)}</b></li>`).join('')}</ul></div>`:'<p class="note">Clean sweep.</p>'}
+     <div class="row"><button class="primary" id="qagain">New quiz</button><button class="ghost" onclick="location.hash='today'">Back to today</button></div></div></div>`;
+    document.getElementById('qagain').onclick=()=>{quizLen=10;viewQuiz();};
+    return;
+  }
+  const {c,opts}=quiz[qi];
+  V.innerHTML=`<div class="stack"><div class="flash">
+   <div class="row" style="justify-content:space-between"><span class="eyebrow">${MODULES.find(m=>m.id===c.m).title}</span><span class="count">${qi+1} / ${quiz.length} · ${qscore} right</span></div>
+   <p class="q">${esc(c.q)}</p>
+   <div class="opts">${opts.map((o,i)=>`<button data-o="${i}">${esc(o)}</button>`).join('')}</div>
+   <button class="primary" id="qnext" hidden>${qi+1<quiz.length?'Next question':'See score'}</button>
+  </div></div>`;
+  V.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{
+    if(answered) return; answered=true;
+    const pick=opts[+b.dataset.o], ok=pick===c.a;
+    V.querySelectorAll('[data-o]').forEach(x=>{x.disabled=true; if(opts[+x.dataset.o]===c.a){x.classList.add('right');x.disabled=false;}});
+    if(!ok){b.classList.add('wrong');b.disabled=false;qmiss.push(c);} else qscore++;
+    grade(c,ok);
+    const n=document.getElementById('qnext'); n.hidden=false; n.focus();
+    n.onclick=()=>{qi++;answered=false;drawQuiz();};
+  });
+}
+
+function viewPrep(){
+  V.innerHTML=`<div class="stack">
+   <div><p class="eyebrow">Before an interest meeting</p><h2 style="margin-top:4px">Know your why</h2>
+   <p class="muted" style="margin-top:6px">Facts show you did the reading. Your answers to these show who you are. Notes save in this browser only.</p></div>
+   ${PREP_Q.map(p=>`<div class="panel stack" style="gap:8px"><label for="n-${p.id}"><strong>${p.q}</strong></label>
+     <textarea id="n-${p.id}" data-n="${p.id}" placeholder="Draft it here">${esc(S.notes[p.id]||'')}</textarea></div>`).join('')}
+   <div class="two">
+    <div class="panel"><h3>Do</h3><ul class="facts do" style="margin-top:10px">
+     <li>Go to public chapter events: service days, forums, Founders’ Day programs.</li>
+     <li>Talk to brothers you already know about their experience.</li>
+     <li>Keep your transcript, résumé, and service record ready.</li>
+     <li>Follow official guidance at apa1906.net and from the chapter.</li>
+     <li>Be patient. Intake timing is set by the chapter.</li>
+    </ul></div>
+    <div class="panel"><h3>Don’t</h3><ul class="facts dont" style="margin-top:10px">
+     <li>Wear letters, colors, or paraphernalia before membership.</li>
+     <li>Ask brothers about ritual or private intake details.</li>
+     <li>Accept any unofficial or “underground” process.</li>
+     <li>Lead with notable names. Lead with service.</li>
+     <li>Treat it as networking only. It is a lifetime commitment.</li>
+    </ul></div>
+   </div>
+   <div class="panel"><h3>Go deeper</h3><ul class="facts" style="margin-top:10px">
+    <li><a href="https://apa1906.net" target="_blank" rel="noopener">apa1906.net</a>: official history, programs, and chapter locator.</li>
+    <li>Charles H. Wesley, <i>The History of Alpha Phi Alpha: A Development in College Life</i>. The official history.</li>
+    <li>Gregory S. Parks and Stefan M. Bradley, eds., <i>Alpha Phi Alpha: A Legacy of Greatness, the Demands of Transcendence</i>.</li>
+    <li>Lawrence C. Ross Jr., <i>The Divine Nine: The History of African American Fraternities and Sororities</i>.</li>
+   </ul></div>
+  </div>`;
+  V.querySelectorAll('[data-n]').forEach(t=>t.oninput=()=>{S.notes[t.dataset.n]=t.value; save();});
+}
+
+/* ---------- ROUTER ---------- */
+const ROUTES={today:viewToday,learn:viewLearn,cards:viewCards,quiz:viewQuiz,prep:viewPrep};
+function route(){const h=location.hash.slice(1);return ROUTES[h]?h:'today';}
+function render(){
+  const r=route();
+  document.querySelectorAll('nav.tabs a').forEach(a=>{ if(a.getAttribute('href')==='#'+r) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  ROUTES[r](); renderMeter();
+  if(r!=='learn') window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',render);
+render();
+</script>
+</body>
+</html>
