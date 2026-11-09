@@ -1,0 +1,4 @@
+pillow
+numpy
+pyyaml
+# optional: faster-whisper  (auto-captions)

@@ -1,0 +1,47 @@
+# brief.yml — one per video. Claude fills this in after reviewing the clips.
+# Anything left out falls back to the defaults in tmngw_video.py.
+
+title: "Is Splitting the Bill on a First Date a Red Flag?"   # YouTube title + post copy
+hook: "Splitting the bill? Be serious."                     # on screen for the first 3.5s
+thumbnail_text: "SPLIT THE *BILL?*"                         # *word* = gold highlight; 2-5 words
+thumbnail_label: ""                                         # small blue tag, e.g. "EP 42"
+thumbnail_frame: null                                       # or {file: clip.mp4, time: 12.5, crop_x: 0.5}
+
+# Order of the cut. Remove lines to drop a clip. Times are seconds in the raw clip.
+#   crop_x: 0 = keep left side, 1 = keep right side (when cropping wide -> vertical)
+#   fit: auto | crop | blur   (blur = full frame over a blurred fill)
+#   faceless: false           -> never used in the faceless YouTube version
+#   volume: 1.0               -> per-clip level before normalising
+clips:
+CLIPS_PLACEHOLDER
+
+music:
+  file: null          # e.g. music/bed.mp3 — royalty-free only (YouTube Audio Library, Epidemic, Artlist)
+  volume: 0.18        # bed level before ducking; auto-ducks under voices
+
+captions: true        # burns captions from captions/<clip-name>.srt (or --transcribe)
+
+platforms:
+  tiktok:
+    enabled: true
+    max_seconds: 60
+    clips: null       # optional separate list for a tighter cut
+  reels:
+    enabled: true
+    max_seconds: 90
+    clips: null
+  youtube:            # faceless channel
+    enabled: true
+    max_seconds: null
+    clips: null
+    voiceover: null   # e.g. voiceover.mp3 — becomes the lead audio; clips play under it
+    ambient_volume: 0.12
+    intro: null       # e.g. brand/intro.mp4
+    outro: null
+
+post:
+  description: ""
+  hashtags: []
+  tiktok: ""          # platform-specific caption; falls back to description
+  reels: ""
+  youtube: ""
